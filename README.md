@@ -65,5 +65,41 @@ To set up the NewsReader App on your local machine, follow these steps:
   ```bash
    open NewsApp.xcodeproj
 
+4. Run the app on a simulator or a physical device by pressing Cmd + R.
+
+## API Integration
+
+The NewsReader app utilizes the [NewsAPI](https://newsapi.org/) to fetch articles. This integration allows the app to display real-time news updates across various categories.
+
+### Getting Started with NewsAPI
+
+1. **Sign Up for an API Key**: 
+   - Visit [NewsAPI.org](https://newsapi.org/) and create an account to obtain your API key. This key is essential for making requests to the API.
+
+2. **Add Your API Key**: 
+   - Once you have your API key, open the `APIConfig.swift` file in your project.
+   - Replace the placeholder API key with your actual key:
+
+   ```swift
+   static let apiKey: String = "YOUR_API_KEY"
+
+### Example API Request
+
+The NewsReader app makes use of the `APIManager` class to handle requests to the NewsAPI. Below is an example of how to fetch the top headlines and handle the response.
+
+```swift
+APIManager.shared.request(endpoint: .topHeadlines) { (result: Result<NewsResponse, NetworkError>) in
+    switch result {
+    case .success(let newsResponse):
+        // Handle the successful response
+        print("Fetched articles: \(newsResponse.articles)")
+    case .failure(let error):
+        // Handle any errors that occur during the request
+        print("Error fetching articles: \(error.localizedDescription)")
+    }
+}
+
+
+
 
 
