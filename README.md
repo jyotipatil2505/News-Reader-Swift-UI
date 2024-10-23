@@ -171,8 +171,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 We would like to acknowledge the following resources and contributors that have made this project possible:
 
 - **NewsAPI**: Thank you to [NewsAPI](https://newsapi.org/) for providing a comprehensive and reliable source of news articles.
-- **SwiftUI**: Special thanks to SwiftUI for the assistance in creating beautiful interfaces for this project and for providing resources that helped in developing the code.
+- **SwiftUI**: Special thanks to [SwiftUI](https://developer.apple.com/xcode/swiftui/) for the assistance in creating beautiful interfaces for this project and for providing resources that helped in developing the code.
 
 If you find this project useful, consider giving it a star on GitHub or contributing to its development!
 
+
+## Contact
+
+For inquiries or feedback, please reach out:
+
+- **Email**: [jyotipatil2505@gmail.com](mailto:jyotipatil2505@gmail.com)
+- **GitHub**: [jyotipatil2505](https://github.com/jyotipatil2505)
+
+Feel free to get in touch for any questions or suggestions regarding the NewsReader app!
 
