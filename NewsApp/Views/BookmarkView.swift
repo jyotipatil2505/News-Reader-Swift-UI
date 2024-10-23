@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookmarkedArticlesView: View {
+struct BookmarkView: View {
     @ObservedObject var viewModel = NewsViewModel()
     
     var body: some View {

@@ -15,7 +15,7 @@ struct MainView: View {
                     Label("News", systemImage: "newspaper")
                 }
             
-            BookmarkedArticlesView()
+            BookmarkView()
                 .tabItem {
                     Label("Bookmarks", systemImage: "bookmark.fill")
                 }

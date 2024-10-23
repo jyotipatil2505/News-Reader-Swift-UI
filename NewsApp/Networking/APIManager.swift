@@ -18,6 +18,7 @@ class APIManager {
             return
         }
         var request = URLRequest(url: url)
+        print("request :::::: ",request.url)
         request.httpMethod = endpoint.method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         URLSession.shared.dataTask(with: request) { data, response, error in

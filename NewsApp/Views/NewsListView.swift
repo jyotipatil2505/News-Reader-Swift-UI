@@ -13,23 +13,8 @@ struct NewsListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Picker for selecting a category
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(NewsCategory.allCases) { category in
-                            Text(category.rawValue)
-                                .padding()
-                                .background(viewModel.selectedCategory == category ? Color.blue : Color.gray)
-                                .cornerRadius(10)
-                                .foregroundColor(.white)
-                                .onTapGesture {
-                                    viewModel.selectedCategory = category
-                                    viewModel.fetchNews()  // Refetch news on selection
-                                }
-                        }
-                    }
-                    .padding()
-                }
+                
+                CategoryFilterView(viewModel: viewModel)  
 
                 ZStack {
                     if viewModel.articles.isEmpty {
