@@ -38,7 +38,6 @@ class NewsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let articles):
-                    print("articles ::::: ",articles)
                     // Filter out articles that are marked as removed
                     let validArticles = articles.filter { article in
                         // Exclude articles with title or description marked as "[Removed]"
@@ -58,9 +57,7 @@ class NewsViewModel: ObservableObject {
     // Function to update isBookmarked flags based on bookmarkedArticles
     private func updateBookmarkedFlags() {
         for index in articles.indices {
-            print("articles[index].id :::::: ",articles[index].id)
             if bookmarkedArticles.contains(where: { $0.id == articles[index].id }) {
-                print("$0.id is bookmarked", articles[index].id)
                 articles[index].isBookmarked = true
             } else {
                 articles[index].isBookmarked = false

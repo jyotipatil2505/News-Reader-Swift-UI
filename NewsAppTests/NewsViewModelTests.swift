@@ -28,30 +28,52 @@ class NewsViewModelTests: XCTestCase {
     func testFetchNewsSuccess() {
         // Arrange: Set up mock articles
         let mockArticle = Article(title: "Test Title", description: "Test Description", url: "https://example.com", urlToImage: nil, publishedAt: "2024-10-21T12:00:00Z")
-        print("mockArticle ::::::: ",mockArticle)
         mockRepository.mockArticles = [mockArticle]
-
+        
+        // Create an expectation to wait for async operation
+        let expectation = XCTestExpectation(description: "Fetch news successfully")
+        
         // Act: Trigger the fetch news function
         viewModel.fetchNews()
 
-        // Assert: Check that articles are correctly loaded into the view model
-        XCTAssertEqual(viewModel.articles.count, 1)
-        XCTAssertEqual(viewModel.articles.first?.title, "Test Title")
+        // Delay the check for async completion
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Assert: Check that articles are correctly loaded into the view model
+            XCTAssertEqual(self.viewModel.articles.count, 1)
+            XCTAssertEqual(self.viewModel.articles.first?.title, "Test Title")
+            
+            // Fulfill the expectation
+            expectation.fulfill()
+        }
+
+        // Wait for the expectation to be fulfilled
+        wait(for: [expectation], timeout: 1.0)
     }
+
 
     // Test fetching news failure (simulating an error)
     func testFetchNewsFailure() {
         // Arrange: Set mock repository to return an error
         mockRepository.shouldReturnError = true
+        
+        // Create an expectation to wait for async operation
+        let expectation = XCTestExpectation(description: "Fetch news failed")
 
         // Act: Trigger the fetch news function
         viewModel.fetchNews()
-        
-        print("viewModel.errorMessage :::::: ",viewModel.errorMessage)
 
-        // Assert: Check if the error message and alert state are set correctly
-        XCTAssertTrue(viewModel.showErrorAlert)
-        XCTAssertEqual(viewModel.errorMessage, NetworkError.invalidURL.localizedDescription)
+        // Wait asynchronously for the result
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Assert: Check if the error message and alert state are set correctly
+            XCTAssertTrue(self.viewModel.showErrorAlert, "Error alert should be shown")
+            XCTAssertEqual(self.viewModel.errorMessage, NetworkError.invalidURL.localizedDescription, "Error message should be correct")
+            
+            // Fulfill the expectation
+            expectation.fulfill()
+        }
+
+        // Wait for the expectation to be fulfilled
+        wait(for: [expectation], timeout: 1.0)
     }
 
     // Test bookmarking an article
@@ -59,16 +81,33 @@ class NewsViewModelTests: XCTestCase {
         // Arrange: Set up mock article
         let mockArticle = Article(title: "Test Title", description: "Test Description", url: "https://example.com", urlToImage: nil, publishedAt: "2024-10-21T12:00:00Z")
         mockRepository.mockArticles = [mockArticle]
+        
+        // Create an expectation to wait for async operation
+        let expectation = XCTestExpectation(description: "Fetch news successfully")
+
+        // Act: Trigger the fetch news function
         viewModel.fetchNews()
 
-        // Act: Toggle the bookmark status of the article
-        let article = viewModel.articles.first!
-        viewModel.toggleBookmark(article: article)
+        // Wait for fetchNews to populate articles
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Assert: Ensure articles are fetched
+            XCTAssertNotNil(self.viewModel.articles.first, "Articles should not be nil after fetch")
+            
+            // Act: Toggle the bookmark status of the article
+            let article = self.viewModel.articles.first!
+            self.viewModel.toggleBookmark(article: article)
 
-        // Assert: Check that the article is bookmarked and appears in the bookmarkedArticles array
-        XCTAssertTrue(viewModel.articles.first!.isBookmarked)
-        XCTAssertEqual(viewModel.bookmarkedArticles.count, 1)
-        XCTAssertEqual(viewModel.bookmarkedArticles.first?.title, "Test Title")
+            // Assert: Check that the article is bookmarked and appears in the bookmarkedArticles array
+            XCTAssertTrue(self.viewModel.articles.first!.isBookmarked)
+            XCTAssertEqual(self.viewModel.bookmarkedArticles.count, 1)
+            XCTAssertEqual(self.viewModel.bookmarkedArticles.first?.title, "Test Title")
+            
+            // Fulfill the expectation
+            expectation.fulfill()
+        }
+
+        // Wait for the expectation to be fulfilled
+        wait(for: [expectation], timeout: 1.0)
     }
 
     // Test removing a bookmark from an article
