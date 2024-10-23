@@ -126,7 +126,6 @@
 			children = (
 				D4CC97E82CC67D3600882A68 /* Repositories */,
 				D4CC97DD2CC67BDE00882A68 /* Networking */,
-				D4CC97DC2CC67B8800882A68 /* Utilities */,
 				D4CC97DB2CC67B7B00882A68 /* Views */,
 				D4CC97DA2CC67B7300882A68 /* ViewModels */,
 				D4CC97D92CC67B6200882A68 /* Models */,
@@ -190,13 +189,6 @@
 				D4CC97F12CC6C63E00882A68 /* NewsDetailView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		D4CC97DC2CC67B8800882A68 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		D4CC97DD2CC67BDE00882A68 /* Networking */ = {

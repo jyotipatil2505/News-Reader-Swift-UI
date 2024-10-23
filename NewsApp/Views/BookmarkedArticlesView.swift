@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookmarkedArticlesView: View {
     @ObservedObject var viewModel = NewsViewModel()
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -22,19 +22,26 @@ struct BookmarkedArticlesView: View {
                         .padding()
                 } else {
                     // Show the list of bookmarked articles
+                    
                     List(viewModel.bookmarkedArticles) { article in
-                        VStack(alignment: .leading) {
-                            Text(article.title)
-                                .font(.headline)
-                            if let description = article.description {
-                                Text(description)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                                    .lineLimit(2)
+                        NavigationLink(destination: NewsDetailView(article: article)) {
+                            
+                            VStack(alignment: .leading) {
+                                Text(article.title)
+                                    .font(.headline)
+                                if let description = article.description {
+                                    Text(description)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                        .lineLimit(2)
+                                }
                             }
+                            .padding(.vertical, 5)
                         }
-                        .padding(.vertical, 5)
+                        
                     }
+                    
+                    
                 }
             }
             .onAppear {
