@@ -60,27 +60,31 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   NewsReaderApp/
   |
   ├── ViewModel/
-  |   ├── NewsViewModel.swift   # Displays list of articles
+  |   ├── NewsViewModel.swift               # Displays list of articles
   |── Model/
-  │   ├── Article.swift              # Article model
-  │   ├── NewsResponse.swift.swift   # News model
+  │   ├── Article.swift                     # Article model
+  │   ├── NewsResponse.swift.swift          # News model
   ├── Views/
-  │   ├── NewsListView.swift.swift   # Displays list of articles
-  │   ├── NewsDetailView.swift       # Displays full article details
-  │   ├── BookmarkView.swift         # Displays bookmarked articles
-  │   ├── MainView.swift             # Allows switching between articles and bookmarked articles
-  │   └── CategoryFilterView.swift   # Allows filtering by category
+  │   ├── NewsListView.swift.swift          # Displays list of articles
+  │   ├── NewsDetailView.swift              # Displays full article details
+  │   ├── BookmarkView.swift                # Displays bookmarked articles
+  │   ├── MainView.swift                    # Allows switching between articles and bookmarked articles
+  │   └── CategoryFilterView.swift          # Allows filtering by category
   ├── Networking/
-  │   ├── APIManager.swift           # Handles network requests
-  │   ├── APIConfig.swift            # Contains configuration details such as the base URL, api key
-  │   ├── Endpoints.swift            # Defines the various API endpoints used in the application
-  │   ├── HTTPMethod.swift           # Enumerates the HTTP methods (e.g., GET, POST) used in network requests
-  │   └── NetworkError.swift         # Defines error handling related to network operations
+  │   ├── APIManager.swift                  # Handles network requests
+  │   ├── APIConfig.swift                   # Contains configuration details such as the base URL, api key
+  │   ├── Endpoints.swift                   # Defines the various API endpoints used in the application
+  │   ├── HTTPMethod.swift                  # Enumerates the HTTP methods (e.g., GET, POST) used in network requests
+  │   └── NetworkError.swift                # Defines error handling related to network operations
+  ├── Repositories/
+  │   ├── Protocols                         # Displays list of articles
+  │   │   ├── NewsRepositoryProtocol.swift  # Defines the `NewsRepositoryProtocol`, which outlines the methods for fetching articles and interacting with news data.
+  │   └── NewsRepository.swift              # Implements the `NewsRepositoryProtocol`, handling the actual data retrieval from the API and managing the data layer of the application
   ├── Tests/
-  │   └── NewsViewModelTests.swift   # Unit tests for ViewModel
-  │   └── MockNewsRepository.swift   # Provides a mock implementation of the news repository for testing purposes
-  ├── NewsReaderApp.xcodeproj        # Xcode project
-  ├── README.md                      # Project documentation
+  │   └── NewsViewModelTests.swift          # Unit tests for ViewModel
+  │   └── MockNewsRepository.swift          # Provides a mock implementation of the news repository for testing purposes
+  ├── NewsReaderApp.xcodeproj               # Xcode project
+  ├── README.md                             # Project documentation
 
   
 
