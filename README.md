@@ -52,6 +52,34 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
 - **ViewModel**: Contains the business logic, communicates with the service layer, and provides data to the View. It acts as an intermediary between the Model and the View, managing the state and behavior of the UI.
 
 
+## Folder Structure
+
+- 
+  ```bash
+  
+  NewsReaderApp/
+  |
+  ├── ViewModel/
+  |   ├── NewsViewModel.swift   # Displays list of articles
+  |── Model/
+  │   ├── Article.swift              # Article model
+  │   ├── NewsResponse.swift.swift   # News model
+  ├── Views/
+  │   ├── NewsListView.swift.swift   # Displays list of articles
+  │   ├── NewsDetailView.swift       # Displays full article details
+  │   ├── BookmarkView.swift
+  │   ├── MainView.swift             # Displays bookmarked articles
+  │   └── CategoryFilterView.swift   # Allows filtering by category
+  ├── Networking/
+  │   ├── APIManager.swift           # Handles network requests
+  │   └── NewsRepository.swift       # Fetches news data
+  ├── Tests/
+  │   └── NewsViewModelTests.swift   # Unit tests for ViewModel
+  ├── NewsReaderApp.xcodeproj        # Xcode project
+  ├── README.md                      # Project documentation
+
+  
+
 ## Installation
 
 To set up the NewsReader App on your local machine, follow these steps:
