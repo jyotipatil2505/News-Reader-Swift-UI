@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategoryFilterView: View {
-    @ObservedObject var viewModel: NewsViewModel  // Inject your ViewModel
+    @ObservedObject var viewModel: NewsViewModel
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -21,7 +21,7 @@ struct CategoryFilterView: View {
                         .foregroundColor(.white)
                         .onTapGesture {
                             viewModel.selectedCategory = category
-                            viewModel.fetchNews()  // Refetch news on selection
+                            viewModel.fetchNews() 
                         }
                 }
             }

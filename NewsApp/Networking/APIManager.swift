@@ -18,7 +18,6 @@ class APIManager {
             return
         }
         var request = URLRequest(url: url)
-        print("request :::::: ",request.url)
         request.httpMethod = endpoint.method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -29,7 +28,7 @@ class APIManager {
             do {
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedResponse))
-            } catch let error {
+            } catch {
                 completion(.failure(.decodingError))
             }
         }.resume()

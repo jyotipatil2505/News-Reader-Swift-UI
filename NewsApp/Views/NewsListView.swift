@@ -21,9 +21,9 @@ struct NewsListView: View {
                         Text("No News Found")
                             .font(.headline)
                             .foregroundColor(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity) // Occupy all available space
-                            .multilineTextAlignment(.center) // Center text alignment
-                            .padding() // Optional padding
+                            .frame(maxWidth: .infinity, maxHeight: .infinity) 
+                            .multilineTextAlignment(.center)
+                            .padding()
                     } else {
                         List(viewModel.articles) { article in
                             NavigationLink(destination: NewsDetailView(article: article)) {
