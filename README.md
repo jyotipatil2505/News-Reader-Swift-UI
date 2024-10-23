@@ -59,11 +59,15 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   
   NewsReaderApp/
   |
+  ├── Screenshots/
+  │   ├── Bookmarks.png                     # Displays the list of bookmarked articles, allowing users to easily access their saved content.
+  │   ├── TopHeadlines.png                  # Shows the screen displaying the top headlines, presenting an overview of the latest articles available in the news
+  │   └── ArticleDetails.png                # Illustrates the detailed view of an article, providing users with in-depth information and content related to the selected news item.
   ├── ViewModel/
-  |   ├── NewsViewModel.swift               # Displays list of articles
+  |   └── NewsViewModel.swift               # Displays list of articles
   |── Model/
   │   ├── Article.swift                     # Article model
-  │   ├── NewsResponse.swift.swift          # News model
+  │   └── NewsResponse.swift.swift          # News model
   ├── Views/
   │   ├── NewsListView.swift.swift          # Displays list of articles
   │   ├── NewsDetailView.swift              # Displays full article details
