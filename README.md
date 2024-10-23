@@ -78,6 +78,7 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   └── NetworkError.swift         # Defines error handling related to network operations
   ├── Tests/
   │   └── NewsViewModelTests.swift   # Unit tests for ViewModel
+  │   └── MockNewsRepository.swift   # Provides a mock implementation of the news repository for testing purposes
   ├── NewsReaderApp.xcodeproj        # Xcode project
   ├── README.md                      # Project documentation
 
