@@ -113,7 +113,7 @@ The NewsReader app provides users with the ability to filter articles based on v
 Users can select any of these categories to tailor their news feed according to their preferences, making it easier to stay informed about topics that matter to them.
 
 
-### Usage
+## Usage
 
 To use the NewsReader app, follow these steps:
 
@@ -128,4 +128,51 @@ To use the NewsReader app, follow these steps:
 
 4. **Filter News by Category**: 
    Use the dropdown menu to filter news articles by category. Select from various categories such as Business, Entertainment, Health, Science, Sports, Technology, or All to customize your news feed based on your interests.
+
+## Contributing
+
+Contributions to the NewsReader app are welcome and encouraged! To contribute to the project, please follow these steps:
+
+1. **Fork the Repository**: 
+   Click the "Fork" button at the top right of the repository page to create your own copy of the project.
+
+2. **Clone Your Fork**: 
+   Clone your forked repository to your local machine using the command:
+
+   ```bash
+   git clone https://github.com/your-username/News-Reader-Swift-UI.git
+
+3. Create a New Branch: Navigate to the project directory and create a new branch for your feature or bug fix:
+
+   ```bash
+   git checkout -b feature/YourFeatureName
+
+4. Make Your Changes: Implement your changes, ensuring that your code adheres to the project's coding standards. Be sure to write tests for any new features or functionality.
+
+5. Commit Your Changes: Commit your changes with a clear and descriptive message:
+
+   ```bash
+   git commit -m "Add a new feature"
+
+6. Push to Your Branch: Push your changes to your forked repository:
+
+   ```bash
+   git push origin feature/YourFeatureName
+
+7. Open a Pull Request: Go to the original repository and open a pull request from your branch. Provide a detailed description of the changes you made and the reasons behind them.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+
+## Acknowledgments
+
+We would like to acknowledge the following resources and contributors that have made this project possible:
+
+- **NewsAPI**: Thank you to [NewsAPI](https://newsapi.org/) for providing a comprehensive and reliable source of news articles.
+- **SwiftUI**: Special thanks to SwiftUI for the assistance in creating beautiful interfaces for this project and for providing resources that helped in developing the code.
+
+If you find this project useful, consider giving it a star on GitHub or contributing to its development!
+
 
