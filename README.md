@@ -72,7 +72,10 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   └── CategoryFilterView.swift   # Allows filtering by category
   ├── Networking/
   │   ├── APIManager.swift           # Handles network requests
-  │   └── NewsRepository.swift       # Fetches news data
+  │   ├── APIConfig.swift            # Contains configuration details such as the base URL, api key
+  │   ├── Endpoints.swift            # Defines the various API endpoints used in the application
+  │   ├── HTTPMethod.swift           # Enumerates the HTTP methods (e.g., GET, POST) used in network requests
+  │   └── NetworkError.swift         # Defines error handling related to network operations
   ├── Tests/
   │   └── NewsViewModelTests.swift   # Unit tests for ViewModel
   ├── NewsReaderApp.xcodeproj        # Xcode project
