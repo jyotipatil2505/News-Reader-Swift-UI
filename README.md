@@ -43,18 +43,13 @@ The NewsReader app aims to simplify how users consume news by aggregating articl
 
 ## Architecture
 
-This project follows the **MVVM (Model-View-ViewModel)** architecture pattern, which helps keep the code modular, maintainable, and testable.
+This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, which helps keep the code modular, maintainable, and testable.
 
-### Components
-
-- **Model**: 
-  - Represents the app data structures. For example, the `Article` model encapsulates the data attributes related to news articles.
+- **Model**: Represents the app data, such as `Article`. It defines the structure of the data and how it can be encoded/decoded.
   
-- **View**: 
-  - SwiftUI views that display the data to the user and handle user interactions. The views are designed to be declarative and reactive, updating automatically as the underlying data changes.
+- **View**: SwiftUI views that display the data and handle user interactions. These are responsible for rendering the user interface and responding to user input.
   
-- **ViewModel**: 
-  - Contains the business logic and acts as a bridge between the Model and View. It communicates with the service layer to fetch data, processes it as needed, and provides it to the View in a format that is easy to consume.
+- **ViewModel**: Contains the business logic, communicates with the service layer, and provides data to the View. It acts as an intermediary between the Model and the View, managing the state and behavior of the UI.
 
 
 ## Installation
