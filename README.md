@@ -31,13 +31,13 @@ The NewsReader app aims to simplify how users consume news by aggregating articl
 ## Screenshots
 
 ### Home Screen
-![Home Screen](path/to/home-screen.png)
+![Home Screen](https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/TopHeadlines.png)
 
 ### Article Detail View
-![Article Detail](path/to/article-detail.png)
+![Article Detail](https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/ArticleDetails.png)
 
 ### Bookmarked Articles
-![Bookmarked Articles](path/to/bookmarked-articles.png)
+![Bookmarked Articles](https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/Bookmarks.png)
 
 ## Installation
 
