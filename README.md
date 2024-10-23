@@ -35,10 +35,10 @@ The NewsReader app aims to simplify how users consume news by aggregating articl
 <img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/TopHeadlines.png" alt="Home Screen" width="240" />
 
 #### Article Details Screen
-<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/ArticleDetails.png" alt="Article Details Screen" width="240" />
+<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/ArticleDetails.png" alt="Article Detail Screen" width="240" />
 
 #### Bookmarks Screen
-<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/Bookmarks.png" alt="Bookmarks Screen" width="240" />
+<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/Bookmarks.png" alt="Bookmarked Screen" width="240" />
 
 
 ## Architecture
@@ -59,24 +59,36 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   
   NewsReaderApp/
   |
+  ├── Screenshots/
+  │   ├── Bookmarks.png                     # Displays the list of bookmarked articles, allowing users to easily access their saved content.
+  │   ├── TopHeadlines.png                  # Shows the screen displaying the top headlines, presenting an overview of the latest articles available in the news
+  │   └── ArticleDetails.png                # Illustrates the detailed view of an article, providing users with in-depth information and content related to the selected news item.
   ├── ViewModel/
-  |   ├── NewsViewModel.swift   # Displays list of articles
+  |   └── NewsViewModel.swift               # Displays list of articles
   |── Model/
-  │   ├── Article.swift              # Article model
-  │   ├── NewsResponse.swift.swift   # News model
+  │   ├── Article.swift                     # Article model
+  │   └── NewsResponse.swift.swift          # News model
   ├── Views/
-  │   ├── NewsListView.swift.swift   # Displays list of articles
-  │   ├── NewsDetailView.swift       # Displays full article details
-  │   ├── BookmarkView.swift
-  │   ├── MainView.swift             # Displays bookmarked articles
-  │   └── CategoryFilterView.swift   # Allows filtering by category
+  │   ├── NewsListView.swift.swift          # Displays list of articles
+  │   ├── NewsDetailView.swift              # Displays full article details
+  │   ├── BookmarkView.swift                # Displays bookmarked articles
+  │   ├── MainView.swift                    # Allows switching between articles and bookmarked articles
+  │   └── CategoryFilterView.swift          # Allows filtering by category
   ├── Networking/
-  │   ├── APIManager.swift           # Handles network requests
-  │   └── NewsRepository.swift       # Fetches news data
+  │   ├── APIManager.swift                  # Handles network requests
+  │   ├── APIConfig.swift                   # Contains configuration details such as the base URL, api key
+  │   ├── Endpoints.swift                   # Defines the various API endpoints used in the application
+  │   ├── HTTPMethod.swift                  # Enumerates the HTTP methods (e.g., GET, POST) used in network requests
+  │   └── NetworkError.swift                # Defines error handling related to network operations
+  ├── Repositories/
+  │   ├── Protocols                         # Displays list of articles
+  │   │   ├── NewsRepositoryProtocol.swift  # Defines the `NewsRepositoryProtocol`, which outlines the methods for fetching articles and interacting with news data.
+  │   └── NewsRepository.swift              # Implements the `NewsRepositoryProtocol`, handling the actual data retrieval from the API and managing the data layer of the application
   ├── Tests/
-  │   └── NewsViewModelTests.swift   # Unit tests for ViewModel
-  ├── NewsReaderApp.xcodeproj        # Xcode project
-  ├── README.md                      # Project documentation
+  │   └── NewsViewModelTests.swift          # Unit tests for ViewModel
+  │   └── MockNewsRepository.swift          # Provides a mock implementation of the news repository for testing purposes
+  ├── NewsReaderApp.xcodeproj               # Xcode project
+  ├── README.md                             # Project documentation
 
   
 
