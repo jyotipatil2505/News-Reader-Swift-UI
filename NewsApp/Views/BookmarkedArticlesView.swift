@@ -22,7 +22,6 @@ struct BookmarkedArticlesView: View {
                         .padding()
                 } else {
                     // Show the list of bookmarked articles
-                    
                     List(viewModel.bookmarkedArticles) { article in
                         NavigationLink(destination: NewsDetailView(article: article)) {
                             
@@ -38,10 +37,7 @@ struct BookmarkedArticlesView: View {
                             }
                             .padding(.vertical, 5)
                         }
-                        
                     }
-                    
-                    
                 }
             }
             .onAppear {

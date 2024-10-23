@@ -13,7 +13,7 @@ class APIManager {
     private init() {}
 
     func request<T: Decodable>(endpoint: Endpoint, completion: @escaping (Result<T, NetworkError>) -> Void) {
-        guard let url = URL(string: endpoint.baseUrl) else {
+        guard let url = URL(string: endpoint.fullUrl) else {
             completion(.failure(.invalidURL))
             return
         }
@@ -25,12 +25,10 @@ class APIManager {
                 completion(.failure(.requestFailed))
                 return
             }
-            print("data :::: ",data)
             do {
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedResponse))
             } catch let error {
-                print("error ::::: ",error)
                 completion(.failure(.decodingError))
             }
         }.resume()
