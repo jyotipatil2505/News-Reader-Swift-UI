@@ -62,10 +62,11 @@ To set up the NewsReader App on your local machine, follow these steps:
 
 3. Open the Xcode project:
 
-  ```bash
+   ```bash
    open NewsApp.xcodeproj
 
 4. Run the app on a simulator or a physical device by pressing Cmd + R.
+
 
 ## API Integration
 
