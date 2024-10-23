@@ -82,6 +82,7 @@ The NewsReader app utilizes the [NewsAPI](https://newsapi.org/) to fetch article
    - Once you have your API key, open the `APIConfig.swift` file in your project.
    - Replace the placeholder API key with your actual key:
 
+
    ```swift
    static let apiKey: String = "YOUR_API_KEY"
 
@@ -91,7 +92,7 @@ The NewsReader app makes use of the `NewsRepository` class to handle requests to
 
 - Below is an example of how to fetch the top headlines and handle the response.:
 
-   ```bash
+   ```swift
    let endpoint = category == .all || category == nil ? Endpoint.topHeadlines() : Endpoint.topHeadlines(category: category?.rawValue)
         APIManager.shared.request(endpoint: endpoint) { (result: Result<NewsResponse, NetworkError>) in
             switch result {
@@ -109,7 +110,7 @@ The NewsReader app makes use of the `NewsRepository` class to handle requests to
 
 - Below is an example of how to request articles related to a specific category, such as Business::
 
-   ```bash
+   ```swift
    newsService.fetchNews(category: .business) { result in
        switch result {
        case .success(let articles):
