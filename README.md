@@ -6,6 +6,7 @@ The **NewsReader App** is a SwiftUI-based mobile application designed to provide
 
 - [Overview](#overview)
 - [Features](#features)
+- [Architecture](#architecture)
 - [Screenshots](#screenshots)
 - [Installation](#installation)
 - [API Integration](#api-integration)
@@ -30,14 +31,54 @@ The NewsReader app aims to simplify how users consume news by aggregating articl
 
 ## Screenshots
 
-### Home Screen
-![Home Screen](path/to/home-screen.png)
+#### Home Screen
+<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/TopHeadlines.png" alt="Home Screen" width="240" />
 
-### Article Detail View
-![Article Detail](path/to/article-detail.png)
+#### Article Details Screen
+<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/ArticleDetails.png" alt="Article Details Screen" width="240" />
 
-### Bookmarked Articles
-![Bookmarked Articles](path/to/bookmarked-articles.png)
+#### Bookmarks Screen
+<img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/Bookmarks.png" alt="Bookmarks Screen" width="240" />
+
+
+## Architecture
+
+This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, which helps keep the code modular, maintainable, and testable.
+
+- **Model**: Represents the app data, such as `Article`. It defines the structure of the data and how it can be encoded/decoded.
+  
+- **View**: SwiftUI views that display the data and handle user interactions. These are responsible for rendering the user interface and responding to user input.
+  
+- **ViewModel**: Contains the business logic, communicates with the service layer, and provides data to the View. It acts as an intermediary between the Model and the View, managing the state and behavior of the UI.
+
+
+## Folder Structure
+
+- 
+  ```bash
+  
+  NewsReaderApp/
+  |
+  ├── ViewModel/
+  |   ├── NewsViewModel.swift   # Displays list of articles
+  |── Model/
+  │   ├── Article.swift              # Article model
+  │   ├── NewsResponse.swift.swift   # News model
+  ├── Views/
+  │   ├── NewsListView.swift.swift   # Displays list of articles
+  │   ├── NewsDetailView.swift       # Displays full article details
+  │   ├── BookmarkView.swift
+  │   ├── MainView.swift             # Displays bookmarked articles
+  │   └── CategoryFilterView.swift   # Allows filtering by category
+  ├── Networking/
+  │   ├── APIManager.swift           # Handles network requests
+  │   └── NewsRepository.swift       # Fetches news data
+  ├── Tests/
+  │   └── NewsViewModelTests.swift   # Unit tests for ViewModel
+  ├── NewsReaderApp.xcodeproj        # Xcode project
+  ├── README.md                      # Project documentation
+
+  
 
 ## Installation
 
@@ -81,21 +122,45 @@ The NewsReader app utilizes the [NewsAPI](https://newsapi.org/) to fetch article
    - Once you have your API key, open the `APIConfig.swift` file in your project.
    - Replace the placeholder API key with your actual key:
 
+
    ```swift
    static let apiKey: String = "YOUR_API_KEY"
 
 ### Example API Request
 
-The NewsReader app makes use of the `NewsRepository` class to handle requests to the NewsAPI. Below is an example of how to fetch the top headlines and handle the response.
+The NewsReader app makes use of the `NewsRepository` class to handle requests to the NewsAPI. 
 
+- Below is an example of how to fetch the top headlines and handle the response.:
 
-
+   ```swift
+   let endpoint = category == .all || category == nil ? Endpoint.topHeadlines() : Endpoint.topHeadlines(category: category?.rawValue)
+        APIManager.shared.request(endpoint: endpoint) { (result: Result<NewsResponse, NetworkError>) in
+            switch result {
+            case .success(let newsResponse):
+                completion(.success(newsResponse.articles))
+            case .failure(let error):
+                print("error :::::: ",error)
+                completion(.failure(error))
+            }
+        }
 
 ### Fetching Articles by Category
 
-   To enhance user experience, the NewsReader app allows you to fetch articles filtered by specific categories. You can specify a category when calling the `fetchNews` method in the `NewsService`. Below is an example of how to request articles related to a specific category, such as Business:
+   To enhance user experience, the NewsReader app allows you to fetch articles filtered by specific categories. You can specify a category when calling the `fetchNews` method in the `NewsService`. 
 
+- Below is an example of how to request articles related to a specific category, such as Business::
 
+   ```swift
+   newsService.fetchNews(category: .business) { result in
+       switch result {
+       case .success(let articles):
+           // Use the fetched articles
+           print("Business articles: \(articles)")
+       case .failure(let error):
+           // Handle any errors that occur
+           print("Error fetching business articles: \(error.localizedDescription)")
+       }
+   }
    
 
 ### Supported Categories
