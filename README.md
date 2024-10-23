@@ -88,32 +88,44 @@ The NewsReader app utilizes the [NewsAPI](https://newsapi.org/) to fetch article
 
 The NewsReader app makes use of the `NewsRepository` class to handle requests to the NewsAPI. Below is an example of how to fetch the top headlines and handle the response.
 
-      ```swift
-      let endpoint = category == .all || category == nil ? Endpoint.topHeadlines() : Endpoint.topHeadlines(category: category?.rawValue)
-     APIManager.shared.request(endpoint: endpoint) { (result: Result<NewsResponse, NetworkError>) in
-         switch result {
-         case .success(let newsResponse):
-             completion(.success(newsResponse.articles))
-         case .failure(let error):
-             print("error :::::: ",error)
-             completion(.failure(error))
-         }
-      }
+
 
 
 ### Fetching Articles by Category
 
-To enhance user experience, the NewsReader app allows you to fetch articles filtered by specific categories. You can specify a category when calling the `fetchNews` method in the `NewsService`. Below is an example of how to request articles related to a specific category, such as Business:
+   To enhance user experience, the NewsReader app allows you to fetch articles filtered by specific categories. You can specify a category when calling the `fetchNews` method in the `NewsService`. Below is an example of how to request articles related to a specific category, such as Business:
 
-   ```swift
-   newsService.fetchNews(category: .business) { result in
-       switch result {
-       case .success(let articles):
-           // Handle the successful response
-           print("Fetched Business articles: \(articles)")
-           // You can now update your UI or store the articles as needed
-       case .failure(let error):
-           // Handle any errors that occur during the request
-           print("Error fetching Business articles: \(error.localizedDescription)")
-       }
-   }
+
+   
+
+### Supported Categories
+
+The NewsReader app provides users with the ability to filter articles based on various news categories. This feature helps users easily find news that aligns with their interests. Below are the supported categories:
+
+- **All**: Displays all available articles from different sources, providing a comprehensive view of current events.
+- **Business**: Articles related to business news, including market updates, financial news, and economic trends.
+- **Entertainment**: Covers news from the entertainment industry, including movies, music, celebrity gossip, and events.
+- **Health**: Articles focusing on health-related topics, including wellness tips, medical breakthroughs, and health news.
+- **Science**: Features articles about scientific discoveries, research findings, and innovations across various fields.
+- **Sports**: News related to sports events, athlete performances, and updates from the sports world.
+- **Technology**: Articles about the latest trends in technology, gadget reviews, software updates, and tech industry news.
+
+Users can select any of these categories to tailor their news feed according to their preferences, making it easier to stay informed about topics that matter to them.
+
+
+### Usage
+
+To use the NewsReader app, follow these steps:
+
+1. **Launch the App**: 
+   Open the NewsReader app on your device or simulator. You will be greeted with the home screen displaying the latest articles.
+
+2. **View Articles**: 
+   Tap on any article to read its full content. This will navigate you to a detailed view of the article where you can find additional information.
+
+3. **Bookmark Articles**: 
+   Use the bookmark feature to save articles for later reading. This allows you to easily revisit your favorite articles without having to search for them again.
+
+4. **Filter News by Category**: 
+   Use the dropdown menu to filter news articles by category. Select from various categories such as Business, Entertainment, Health, Science, Sports, Technology, or All to customize your news feed based on your interests.
+
