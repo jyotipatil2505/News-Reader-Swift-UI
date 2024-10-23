@@ -86,21 +86,34 @@ The NewsReader app utilizes the [NewsAPI](https://newsapi.org/) to fetch article
 
 ### Example API Request
 
-The NewsReader app makes use of the `APIManager` class to handle requests to the NewsAPI. Below is an example of how to fetch the top headlines and handle the response.
+The NewsReader app makes use of the `NewsRepository` class to handle requests to the NewsAPI. Below is an example of how to fetch the top headlines and handle the response.
 
-```swift
-APIManager.shared.request(endpoint: .topHeadlines) { (result: Result<NewsResponse, NetworkError>) in
-    switch result {
-    case .success(let newsResponse):
-        // Handle the successful response
-        print("Fetched articles: \(newsResponse.articles)")
-    case .failure(let error):
-        // Handle any errors that occur during the request
-        print("Error fetching articles: \(error.localizedDescription)")
-    }
-}
-
-
+      ```swift
+      let endpoint = category == .all || category == nil ? Endpoint.topHeadlines() : Endpoint.topHeadlines(category: category?.rawValue)
+     APIManager.shared.request(endpoint: endpoint) { (result: Result<NewsResponse, NetworkError>) in
+         switch result {
+         case .success(let newsResponse):
+             completion(.success(newsResponse.articles))
+         case .failure(let error):
+             print("error :::::: ",error)
+             completion(.failure(error))
+         }
+      }
 
 
+### Fetching Articles by Category
 
+To enhance user experience, the NewsReader app allows you to fetch articles filtered by specific categories. You can specify a category when calling the `fetchNews` method in the `NewsService`. Below is an example of how to request articles related to a specific category, such as Business:
+
+   ```swift
+   newsService.fetchNews(category: .business) { result in
+       switch result {
+       case .success(let articles):
+           // Handle the successful response
+           print("Fetched Business articles: \(articles)")
+           // You can now update your UI or store the articles as needed
+       case .failure(let error):
+           // Handle any errors that occur during the request
+           print("Error fetching Business articles: \(error.localizedDescription)")
+       }
+   }
