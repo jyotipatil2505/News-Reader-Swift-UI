@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewsListView: View {
     @ObservedObject var viewModel = NewsViewModel()
-    
+
     var body: some View {
         NavigationView {
             VStack {

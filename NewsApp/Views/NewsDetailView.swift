@@ -9,7 +9,7 @@ import SwiftUI
 struct NewsDetailView: View {
     let article: Article
     @Environment(\.presentationMode) var presentationMode // Access to the current presentation mode
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -23,7 +23,8 @@ struct NewsDetailView: View {
                             .clipped() // Clipping to ensure it doesn't overflow
                             .cornerRadius(10)
                     } placeholder: {
-                        ProgressView() // Show a loading indicator while the image is loading
+                        
+    () // Show a loading indicator while the image is loading
                     }
                     .frame(height: 200) // Set a fixed height for the image
                     .padding(.horizontal)
@@ -51,7 +52,7 @@ struct NewsDetailView: View {
                 Spacer() // Adds space below the content
             }
         }
-        .navigationTitle("Article")
+        .navigationTitle("Article Details")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
