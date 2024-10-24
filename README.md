@@ -31,7 +31,7 @@ The NewsReader app aims to simplify how users consume news by aggregating articl
 
 ## Screenshots
 
-#### Home Screen (Articles Screen)
+#### Home Screen
 <img src="https://github.com/jyotipatil2505/News-Reader-Swift-UI/blob/main/NewsApp/Screenshots/TopHeadlines.png" alt="Home Screen" width="240" />
 
 #### Article Detail Screen
@@ -71,6 +71,7 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   ├── Views/
   │   ├── NewsListView.swift.swift          # Displays list of articles
   │   ├── NewsDetailView.swift              # Displays full article details
+  │   ├── NewsImageView.swift               # Displays the news image.
   │   ├── BookmarkView.swift                # Displays bookmarked articles
   │   ├── MainView.swift                    # Allows switching between articles and bookmarked articles
   │   └── CategoryFilterView.swift          # Allows filtering by category
@@ -111,7 +112,7 @@ To set up the NewsReader App on your local machine, follow these steps:
 2. Navigate into the project directory:
 
    ```bash
-   cd NewsApp
+   cd News-Reader-Swift-UI
 
 3. Open the Xcode project:
 
@@ -204,7 +205,7 @@ To use the NewsReader app, follow these steps:
    Use the bookmark feature to save articles for later reading. This allows you to easily revisit your favorite articles without having to search for them again.
 
 4. **Filter News by Category**: 
-   Use the dropdown menu to filter news articles by category. Select from various categories such as Business, Entertainment, Health, Science, Sports, Technology, or All to customize your news feed based on your interests.
+   Use the grid-based menu to filter news articles by category. Select from various categories such as Business, Entertainment, Health, Science, Sports, Technology, or All to customize your news feed based on your interests.
 
 ## Contributing
 
