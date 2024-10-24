@@ -11,6 +11,7 @@
 		D49E27D22CC8E07000D5F479 /* Bookmarks.png in Resources */ = {isa = PBXBuildFile; fileRef = D49E27CF2CC8E07000D5F479 /* Bookmarks.png */; };
 		D49E27D32CC8E07000D5F479 /* ArticleDetails.png in Resources */ = {isa = PBXBuildFile; fileRef = D49E27D02CC8E07000D5F479 /* ArticleDetails.png */; };
 		D49E27D52CC8FEBD00D5F479 /* CategoryFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49E27D42CC8FEBD00D5F479 /* CategoryFilterView.swift */; };
+		D49E27DE2CCA3DA500D5F479 /* NewsImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49E27DD2CCA3DA500D5F479 /* NewsImageView.swift */; };
 		D4CC97B02CC67B3D00882A68 /* NewsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CC97AF2CC67B3D00882A68 /* NewsAppApp.swift */; };
 		D4CC97B42CC67B3E00882A68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CC97B32CC67B3E00882A68 /* Assets.xcassets */; };
 		D4CC97B72CC67B3E00882A68 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CC97B62CC67B3E00882A68 /* Preview Assets.xcassets */; };
@@ -56,6 +57,7 @@
 		D49E27CF2CC8E07000D5F479 /* Bookmarks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bookmarks.png; sourceTree = "<group>"; };
 		D49E27D02CC8E07000D5F479 /* ArticleDetails.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArticleDetails.png; sourceTree = "<group>"; };
 		D49E27D42CC8FEBD00D5F479 /* CategoryFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterView.swift; sourceTree = "<group>"; };
+		D49E27DD2CCA3DA500D5F479 /* NewsImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsImageView.swift; sourceTree = "<group>"; };
 		D4CC97AC2CC67B3D00882A68 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4CC97AF2CC67B3D00882A68 /* NewsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAppApp.swift; sourceTree = "<group>"; };
 		D4CC97B32CC67B3E00882A68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				D4CC97F92CC6D36900882A68 /* BookmarkView.swift */,
 				D4CC97F12CC6C63E00882A68 /* NewsDetailView.swift */,
 				D49E27D42CC8FEBD00D5F479 /* CategoryFilterView.swift */,
+				D49E27DD2CCA3DA500D5F479 /* NewsImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4CC97E12CC67C0B00882A68 /* APIConfig.swift in Sources */,
+				D49E27DE2CCA3DA500D5F479 /* NewsImageView.swift in Sources */,
 				D4CC97F82CC6D34400882A68 /* MainView.swift in Sources */,
 				D49E27D52CC8FEBD00D5F479 /* CategoryFilterView.swift in Sources */,
 				D4CC97EE2CC6803400882A68 /* NewsResponse.swift in Sources */,
@@ -560,6 +564,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"NewsApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NewsReader;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -589,6 +594,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"NewsApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NewsReader;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
