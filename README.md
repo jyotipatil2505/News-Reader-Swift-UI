@@ -71,6 +71,7 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   ├── Views/
   │   ├── NewsListView.swift.swift          # Displays list of articles
   │   ├── NewsDetailView.swift              # Displays full article details
+  │   ├── NewsImageView.swift               # Displays the news image.
   │   ├── BookmarkView.swift                # Displays bookmarked articles
   │   ├── MainView.swift                    # Allows switching between articles and bookmarked articles
   │   └── CategoryFilterView.swift          # Allows filtering by category
