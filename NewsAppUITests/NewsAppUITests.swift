@@ -29,7 +29,7 @@ final class NewsAppUITests: XCTestCase {
         }
     }
     
-    func testNewsListViewUI() {
+    func testNewsTabUI() {
         // Launch the app
         let app = XCUIApplication()
         app.launch()
@@ -57,7 +57,11 @@ final class NewsAppUITests: XCTestCase {
         
         print(app.debugDescription)
         sleep(5)  // Add a small delay to let the UI load
-
+        
+        // Verify the content for the "News" tab
+        let newsListView = app.scrollViews[AccessibilityIdentifier.newsListView] // Assuming you have this identifier set
+        XCTAssertTrue(newsListView.waitForExistence(timeout: 15), "News List View should exist")
+        
         // Get the list of article cells
         let articleCells = app.cells
         let cellCount = articleCells.count
@@ -72,19 +76,19 @@ final class NewsAppUITests: XCTestCase {
             let bookmarkButton = firstArticleCell.buttons.matching(identifier: AccessibilityIdentifier.bookmarkButton).element(boundBy: 1)
             XCTAssertTrue(bookmarkButton.exists, "Bookmark button should exist for the first article")
             
-            // Check initial bookmark state (e.g., unbookmarked state)
+            // Check initial bookmark state (e.g., bookmark state)
             XCTAssertEqual(bookmarkButton.label, "bookmark", "Bookmark button should initially be in the unbookmarked state")
             
             // Tap the bookmark button
             bookmarkButton.tap()
             
-            // Verify the bookmark button updates to the bookmarked state
+            // Verify the bookmark button updates to the bookmark.fill state
             XCTAssertEqual(bookmarkButton.label, "bookmark.fill", "Bookmark button should update to the bookmarked state after tapping")
             
             // Tap the bookmark button again to unbookmark
             bookmarkButton.tap()
             
-            // Verify the bookmark button returns to the unbookmarked state
+            // Verify the bookmark button returns to the bookmark state
             XCTAssertEqual(bookmarkButton.label, "bookmark", "Bookmark button should return to the unbookmarked state after tapping again")
             
         } else {
@@ -117,6 +121,10 @@ final class NewsAppUITests: XCTestCase {
         // Debug: Print all elements
         print(app.debugDescription)
         
+        // Verify the content for the "News" tab
+        let newsListView = app.scrollViews[AccessibilityIdentifier.newsListView] // Assuming you have this identifier set
+        XCTAssertTrue(newsListView.waitForExistence(timeout: 15), "News List View should exist")
+        
         // Get the list of article cells
         let articleCells = app.cells
         let cellCount = articleCells.count
@@ -144,7 +152,7 @@ final class NewsAppUITests: XCTestCase {
         }
     }
     
-    func testBookmarkViewUI() {
+    func testBookmarkTabUI() {
         // Launch the app
         let app = XCUIApplication()
         app.launch()
@@ -166,5 +174,39 @@ final class NewsAppUITests: XCTestCase {
         // Verify the content for the "Bookmark" tab
         let bookmarkListView = app.staticTexts[AccessibilityIdentifier.bookmarkListView] // Assuming you have this identifier set
         XCTAssertTrue(bookmarkListView.waitForExistence(timeout: 10), "Bookmark List View should appear after tapping the Bookmark tab")
+    }
+    
+    func testNoBookmarkViewUI() {
+        // Launch the app
+        let app = XCUIApplication()
+        app.launch()
+        sleep(5)  // Add a small delay to let the UI load
+        print(app.debugDescription)
+        
+        // Verify that the tabBar exists
+        let tabBar = app.otherElements[AccessibilityIdentifier.tabBar]
+        XCTAssertTrue(tabBar.waitForExistence(timeout: 10), "Tab bar should exist")
+        
+        // Verify the "Bookmark" tab button exists
+        let bookmarkTabButton = tabBar.buttons.element(boundBy: 1)  // Second tab (Bookmark)
+        XCTAssertTrue(bookmarkTabButton.waitForExistence(timeout: 10), "Bookmark tab button should exist")
+        
+        // Tap the "Bookmark" tab
+        bookmarkTabButton.tap()
+        
+        // Verify the content for the "Bookmark" tab
+        let bookmarkListView = app.staticTexts[AccessibilityIdentifier.bookmarkListView] // Assuming you have this identifier set
+        XCTAssertTrue(bookmarkListView.waitForExistence(timeout: 10), "Bookmark List View should appear after tapping the Bookmark tab")
+        
+        let articleCells = app.cells
+        let cellCount = articleCells.count
+        
+        // Assert that no articles are bookmarked
+        if cellCount == 0 {
+            let noBookmarksMessage = app.staticTexts["You haven’t bookmarked any articles yet. Browse and bookmark your favorites!"]
+            XCTAssertTrue(noBookmarksMessage.waitForExistence(timeout: 10), "No bookmarks message should be visible when no articles are bookmarked")
+        } else {
+            XCTFail("Bookmark list is not empty; test intended for empty state only")
+        }
     }
 }
