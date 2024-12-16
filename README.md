@@ -60,76 +60,76 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   NewsApp/
   |
   ├── Screenshots/
-  │   ├── Bookmarks.png                                        # Displays the main screen of the CryptoCoin app, showing a list of available cryptocurrency coins.
-  │   ├── TopHeadlines.png                                     # Demonstrates the filter functionality within the app
-  │   └── ArticleDetails.png                                   # Illustrates the detailed view of the searched list of cryptocurrency coins
-  ├── Application/                                             # Core presentation layer of the application, handling UI logic and user interaction.
-  │   ├── SceneDelegate.swift                                  # Contains logic to manage the UI data.
+  │   ├── Bookmarks.png                                        # Screenshot of the Bookmark tab, showing saved articles.
+  │   ├── TopHeadlines.png                                     # Screenshot showcasing the filter functionality for news categories.
+  │   └── ArticleDetails.png                                   # Screenshot displaying the detailed view of a news article.
+  ├── Application/                                             
+  │   ├── SceneDelegate.swift                                  # Manages the app's UI lifecycle and handles transitions between app states.
   ├── Presentation/                                            # Core presentation layer of the application, handling UI logic and user interaction.
-  │   ├── Utils                                                # Contains logic to manage the UI data.
-  │   │   ├── AccessibilityIdentifier.swift                    # Manages the logic for fetching and preparing crypto coin data for display in the UI.
-  │   ├── ViewModels                                           # Contains logic to manage the UI data.
-  │   │   ├── NewsViewModel.swift                              # Manages the logic for fetching and preparing crypto coin data for display in the UI.
-  │   │   ├── ViewModelFactory.swift                           # Manages the logic for fetching and preparing crypto coin data for display in the UI.
-  │   ├── Views                                                # Displays list of articles
-  │   │   ├── NewsListView.swift                               # UI component to apply multiple filters to the crypto coin list.
-  │   │   ├── MainView.swift                                   # Displays a loading animation while data is being fetched.
-  │   │   ├── BookmarkView.swift                               # Custom table cell to display coin details (name, symbol, type) with appropriate styles.
-  │   │   ├── NewsDetailView.swift                             # Displays a placeholder when there is no data to show.
-  │   │   ├── CategoryFilterView.swift.swift                   # Displays a placeholder when there is no data to show.
-  │   │   ├── NewsImageView.swift.swift.swift                  # Displays a placeholder when there is no data to show.
-  ├── Domain/                                                  # Contains business logic, which is independent of frameworks and UI.
+  │   ├── Utils                                                # Shared utility functions and constants for the UI layer.
+  │   │   ├── AccessibilityIdentifier.swift                    # Contains identifiers for UI elements to support testing and accessibility.
+  │   ├── ViewModels                                           # Handles business logic and prepares data for the views.
+  │   │   ├── NewsViewModel.swift                              # Fetches and prepares news data for display.
+  │   │   ├── ViewModelFactory.swift                           # Factory class to create instances of view models.
+  │   ├── Views                                                # Defines the app's user interface.
+  │   │   ├── NewsListView.swift                               # Displays a list of news articles.
+  │   │   ├── MainView.swift                                   # Main entry point for the app's UI.
+  │   │   ├── BookmarkView.swift                               # Displays a list of bookmarked articles.
+  │   │   ├── NewsDetailView.swift                             # Shows detailed information about a selected article.
+  │   │   ├── CategoryFilterView.swift                         # UI for filtering news articles by category.
+  │   │   ├── NewsImageView.swift.swift                        # Handles the display of images in news articles.
+  ├── Domain/                                                  
   │   ├── UseCases                                             # Encapsulates specific business logic.
-  │   │   ├── FetchNewsUseCase.swift                           # Handles the use case of fetching a list of crypto coins from data sources.
+  │   │   ├── FetchNewsUseCase.swift                           # Handles the process of retrieving news data.
   │   ├── Repositories                                         # Defines interfaces for data operations.
-  │   │   ├── NewsRepositoryProtocol.swift                     # Outlines the methods for interacting with crypto coin data sources (local or network).
+  │   │   ├── NewsRepositoryProtocol.swift                     # Outlines methods for fetching news data.
   │   ├── Entities                                             # Represents core application models.
-  │   │   ├── NewsCategory.swift                               # Data model defining the structure of a crypto coin entity.
-  │   │   ├── NewsResponse.swift                               # Data model defining the structure of a crypto coin entity.
-  │   │   ├── ArticleModel.swift                               # Data model defining the structure of a crypto coin entity.
+  │   │   ├── NewsCategory.swift                               # Represents a news category.
+  │   │   ├── NewsResponse.swift                               # Models the response from a news API.
+  │   │   ├── ArticleModel.swift                               # Represents an individual news article.
   ├── Data/                                                 
-  │   ├── DataSources                                       
-  │   │   ├── Local                                            # Handles local storage of crypto coin data.
+  │   ├── DataSources                                          # Manages data operations.
+  │   │   ├── Local                                            # Handles local storage.
   │   │   │   ├── Mappers                                      # Converts data between local and domain models.
-  │   │   │   │   ├── ArticleModel+RealmMapper.swift           # Maps between CryptoCoinModel and Realm model.
-  │   │   │   │   ├── ArticleRealm+DomainMapper.swift          # Maps between Realm model and domain model.
-  │   │   │   ├── Models                                       # Contains Realm database models for storing crypto coin data.
-  │   │   │   │   │── ArticleRealm.swift                       # Protocol for network service operations.
-  │   │   │   ├── NewsLocalDataSource.swift                    # Implementation of local data operations.
-  │   │   │   ├── NewsLocalDataSourceImpl.swift                # Defines errors related to local storage operations.
-  │   │   │   ├── LocalStorageError.swift                      # Defines errors related to local storage operations.
-  │   │   ├── Network                                          # Handles fetching data from remote sources.
-  │   │   │   ├── NewsNetworkDataSource.swift                  # Protocol for network operations.
-  │   │   │   ├── NewsNetworkDataSourceImpl.swift              # Implementation of network operations.
-  │   ├── Repositories                                         # Concrete implementations of data repositories.
-  │   │   ├── NewsRepository.swift                             # Implements methods to fetch and manage crypto coin data from local or network sources.
-  ├── Core/                                                    # Contains shared resources and utility classes.
-  │   ├── Utils                                                # Concrete implementations of data repositories.
-  │   │   ├── Constants.swift                                  # Implements methods to fetch and manage crypto coin data from local or network sources.
-  │   │   ├── Extensions.swift                                 # Implements methods to fetch and manage crypto coin data from local or network sources.
-  │   │   ├── Helpers.swift                                    # Implements methods to fetch and manage crypto coin data from local or network sources.
-  │   │   ├── Localization.swift                               # Implements methods to fetch and manage crypto coin data from local or network sources.
-  │   │   ├── Reachability.swift                               # Implements methods to fetch and manage crypto coin data from local or network sources.
+  │   │   │   │   ├── ArticleModel+RealmMapper.swift           # Maps ArticleModel to Realm objects.
+  │   │   │   │   ├── ArticleRealm+DomainMapper.swift          # Maps Realm objects back to domain models.
+  │   │   │   ├── Models                                       # Contains Realm models.
+  │   │   │   │   │── ArticleRealm.swift                       # Realm model for storing article data.
+  │   │   │   ├── NewsLocalDataSource.swift                    # Protocol for local storage operations.
+  │   │   │   ├── NewsLocalDataSourceImpl.swift                # Implements local data operations.
+  │   │   │   ├── LocalStorageError.swift                      # Defines errors for local data storage.
+  │   │   ├── Network                                          # Manages API interactions.
+  │   │   │   ├── NewsNetworkDataSource.swift                  # Protocol for network data fetching.
+  │   │   │   ├── NewsNetworkDataSourceImpl.swift              # Implements network data fetching.
+  │   ├── Repositories                                         # Implements repository interfaces.
+  │   │   ├── NewsRepository.swift                             # Concrete implementation for managing news data.
+  ├── Core/                                                    
+  │   ├── Utils                                                # Shared utility classes and extensions.
+  │   │   ├── Constants.swift                                  # Application-wide constants.
+  │   │   ├── Extensions.swift                                 # Commonly used extensions.
+  │   │   ├── Helpers.swift                                    # Utility functions for various tasks.
+  │   │   ├── Localization.swift                               # Manages localized strings.
+  │   │   ├── Reachability.swift                               # Checks network connectivity.
   ├── Infrastructure/                                       
-  │   ├── Network                                              # Manages API calls and network configurations.
-  │   │   ├── Protocols                                     
-  │   │   │   ├── APIServiceProtocol.swift                     # Protocol for network service operations.
-  │   │   │   APIConfig.swift                                  # Configuration for Base Url, Api Keys.
-  │   │   │   APIServiceManager.swift                          # Manages network requests and responses.
+  │   ├── Network                                              # Handles networking.
+  │   │   ├── Protocols                                        # Defines networking-related contracts.
+  │   │   │   ├── APIServiceProtocol.swift                     # Protocol for API service operations.
+  │   │   │   APIConfig.swift                                  # Configuration for API base URLs and keys.
+  │   │   │   APIServiceManager.swift                          # Manages API requests and responses.
   │   │   │   Endpoints.swift                                  # Defines API endpoints.
-  │   │   │   HTTPMethod.swift                                 # Enum for HTTP request methods (GET, POST, etc.).
+  │   │   │   HTTPMethod.swift                                 # Enum for HTTP methods like GET, POST.
   │   │   │   NetworkError.swift                               # Defines network-related errors.
-  │   │   │   NetworkManager.swift                             # Implements network service operations.
+  │   │   │   NetworkManager.swift                             # Implements networking operations.
   |── Resources/
-  │   ├── Preview Content                                            
-  │   │   ├── Preview Assets.xcassets                          # Handles localization and internationalization for the app
-  │   ├── Main.storyboard                                      # Primary storyboard for the application UI.
-  │   ├── Assets.xcassets                                      # Images and icons used in the app.
+  │   ├── Preview Content                                      # Preview assets for SwiftUI previews.     
+  │   │   ├── Preview Assets.xcassets                          # Preview images and resources.
+  │   ├── Main.storyboard                                      # Main storyboard for UI layout.
+  │   ├── Assets.xcassets                                      # App icons and image assets.
   ├── NewsAppUITests/
-  │   ├── Presentation                                         # Includes test cases for the presentation layer of the application
-  │   │   ├── NewsAppUITests.swift                             # Contains unit tests for the CryptoListViewModel
-  ├── NewsApp.xcworkspace                                      # Xcode project
-  ├── README.md     
+  │   ├── Presentation                                         # UI tests for the presentation layer.
+  │   │   ├── NewsAppUITests.swift                             # UI test cases for verifying the app's functionality.
+  ├── NewsApp.xcworkspace                                      # The Xcode workspace file for the project.
+  ├── README.md                                                # Documentation and setup instructions for the project.
 
   
 
