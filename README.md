@@ -57,39 +57,79 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
 - 
   ```bash
   
-  NewsReaderApp/
+  NewsApp/
   |
   ├── Screenshots/
-  │   ├── Bookmarks.png                     # Displays the list of bookmarked articles, allowing users to easily access their saved content.
-  │   ├── TopHeadlines.png                  # Shows the screen displaying the top headlines, presenting an overview of the latest articles available in the news
-  │   └── ArticleDetails.png                # Illustrates the detailed view of an article, providing users with in-depth information and content related to the selected news item.
-  ├── ViewModel/
-  |   └── NewsViewModel.swift               # Displays list of articles
-  |── Model/
-  │   ├── Article.swift                     # Article model
-  │   └── NewsResponse.swift.swift          # News model
-  ├── Views/
-  │   ├── NewsListView.swift.swift          # Displays list of articles
-  │   ├── NewsDetailView.swift              # Displays full article details
-  │   ├── NewsImageView.swift               # Displays the news image.
-  │   ├── BookmarkView.swift                # Displays bookmarked articles
-  │   ├── MainView.swift                    # Allows switching between articles and bookmarked articles
-  │   └── CategoryFilterView.swift          # Allows filtering by category
-  ├── Networking/
-  │   ├── APIManager.swift                  # Handles network requests
-  │   ├── APIConfig.swift                   # Contains configuration details such as the base URL, api key
-  │   ├── Endpoints.swift                   # Defines the various API endpoints used in the application
-  │   ├── HTTPMethod.swift                  # Enumerates the HTTP methods (e.g., GET, POST) used in network requests
-  │   └── NetworkError.swift                # Defines error handling related to network operations
-  ├── Repositories/
-  │   ├── Protocols                         # Displays list of articles
-  │   │   ├── NewsRepositoryProtocol.swift  # Defines the `NewsRepositoryProtocol`, which outlines the methods for fetching articles and interacting with news data.
-  │   └── NewsRepository.swift              # Implements the `NewsRepositoryProtocol`, handling the actual data retrieval from the API and managing the data layer of the application
-  ├── Tests/
-  │   └── NewsViewModelTests.swift          # Unit tests for ViewModel
-  │   └── MockNewsRepository.swift          # Provides a mock implementation of the news repository for testing purposes
-  ├── NewsReaderApp.xcodeproj               # Xcode project
-  ├── README.md                             # Project documentation
+  │   ├── Bookmarks.png                                        # Screenshot of the Bookmark tab, showing saved articles.
+  │   ├── TopHeadlines.png                                     # Screenshot showcasing the filter functionality for news categories.
+  │   └── ArticleDetails.png                                   # Screenshot displaying the detailed view of a news article.
+  ├── Application/                                             
+  │   ├── SceneDelegate.swift                                  # Manages the app's UI lifecycle and handles transitions between app states.
+  ├── Presentation/                                            # Core presentation layer of the application, handling UI logic and user interaction.
+  │   ├── Utils                                                # Shared utility functions and constants for the UI layer.
+  │   │   ├── AccessibilityIdentifier.swift                    # Contains identifiers for UI elements to support testing and accessibility.
+  │   ├── ViewModels                                           # Handles business logic and prepares data for the views.
+  │   │   ├── NewsViewModel.swift                              # Fetches and prepares news data for display.
+  │   │   ├── ViewModelFactory.swift                           # Factory class to create instances of view models.
+  │   ├── Views                                                # Defines the app's user interface.
+  │   │   ├── NewsListView.swift                               # Displays a list of news articles.
+  │   │   ├── MainView.swift                                   # Main entry point for the app's UI.
+  │   │   ├── BookmarkView.swift                               # Displays a list of bookmarked articles.
+  │   │   ├── NewsDetailView.swift                             # Shows detailed information about a selected article.
+  │   │   ├── CategoryFilterView.swift                         # UI for filtering news articles by category.
+  │   │   ├── NewsImageView.swift.swift                        # Handles the display of images in news articles.
+  ├── Domain/                                                  
+  │   ├── UseCases                                             # Encapsulates specific business logic.
+  │   │   ├── FetchNewsUseCase.swift                           # Handles the process of retrieving news data.
+  │   ├── Repositories                                         # Defines interfaces for data operations.
+  │   │   ├── NewsRepositoryProtocol.swift                     # Outlines methods for fetching news data.
+  │   ├── Entities                                             # Represents core application models.
+  │   │   ├── NewsCategory.swift                               # Represents a news category.
+  │   │   ├── NewsResponse.swift                               # Models the response from a news API.
+  │   │   ├── ArticleModel.swift                               # Represents an individual news article.
+  ├── Data/                                                 
+  │   ├── DataSources                                          # Manages data operations.
+  │   │   ├── Local                                            # Handles local storage.
+  │   │   │   ├── Mappers                                      # Converts data between local and domain models.
+  │   │   │   │   ├── ArticleModel+RealmMapper.swift           # Maps ArticleModel to Realm objects.
+  │   │   │   │   ├── ArticleRealm+DomainMapper.swift          # Maps Realm objects back to domain models.
+  │   │   │   ├── Models                                       # Contains Realm models.
+  │   │   │   │   │── ArticleRealm.swift                       # Realm model for storing article data.
+  │   │   │   ├── NewsLocalDataSource.swift                    # Protocol for local storage operations.
+  │   │   │   ├── NewsLocalDataSourceImpl.swift                # Implements local data operations.
+  │   │   │   ├── LocalStorageError.swift                      # Defines errors for local data storage.
+  │   │   ├── Network                                          # Manages API interactions.
+  │   │   │   ├── NewsNetworkDataSource.swift                  # Protocol for network data fetching.
+  │   │   │   ├── NewsNetworkDataSourceImpl.swift              # Implements network data fetching.
+  │   ├── Repositories                                         # Implements repository interfaces.
+  │   │   ├── NewsRepository.swift                             # Concrete implementation for managing news data.
+  ├── Core/                                                    
+  │   ├── Utils                                                # Shared utility classes and extensions.
+  │   │   ├── Constants.swift                                  # Application-wide constants.
+  │   │   ├── Extensions.swift                                 # Commonly used extensions.
+  │   │   ├── Helpers.swift                                    # Utility functions for various tasks.
+  │   │   ├── Localization.swift                               # Manages localized strings.
+  │   │   ├── Reachability.swift                               # Checks network connectivity.
+  ├── Infrastructure/                                       
+  │   ├── Network                                              # Handles networking.
+  │   │   ├── Protocols                                        # Defines networking-related contracts.
+  │   │   │   ├── APIServiceProtocol.swift                     # Protocol for API service operations.
+  │   │   │   APIConfig.swift                                  # Configuration for API base URLs and keys.
+  │   │   │   APIServiceManager.swift                          # Manages API requests and responses.
+  │   │   │   Endpoints.swift                                  # Defines API endpoints.
+  │   │   │   HTTPMethod.swift                                 # Enum for HTTP methods like GET, POST.
+  │   │   │   NetworkError.swift                               # Defines network-related errors.
+  │   │   │   NetworkManager.swift                             # Implements networking operations.
+  |── Resources/
+  │   ├── Preview Content                                      # Preview assets for SwiftUI previews.     
+  │   │   ├── Preview Assets.xcassets                          # Preview images and resources.
+  │   ├── Main.storyboard                                      # Main storyboard for UI layout.
+  │   ├── Assets.xcassets                                      # App icons and image assets.
+  ├── NewsAppUITests/
+  │   ├── Presentation                                         # UI tests for the presentation layer.
+  │   │   ├── NewsAppUITests.swift                             # UI test cases for verifying the app's functionality.
+  ├── NewsApp.xcworkspace                                      # The Xcode workspace file for the project.
+  ├── README.md                                                # Documentation and setup instructions for the project.
 
   
 
