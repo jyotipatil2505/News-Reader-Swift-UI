@@ -64,13 +64,19 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   ├── TopHeadlines.png                                     # Screenshot showcasing the filter functionality for news categories.
   │   └── ArticleDetails.png                                   # Screenshot displaying the detailed view of a news article.
   ├── Application/                                             
-  │   ├── SceneDelegate.swift                                  # Manages the app's UI lifecycle and handles transitions between app states.
+  │   ├── SceneDelegate.swift                                  # Manages the app's UI lifecycle and scene transitions.
+  │   ├── EnvironmentConfiguration.swift                       # Handles environment-specific settings like API URLs and API keys.
+  │   ├── FlowCoordinator.swift                                # Manages the app's primary flow and determines which view to display based on the app's state.
+  │   ├── Container                                            # Container
+  │   │   ├── AppContainer.swift                               # Serves as the central dependency container, providing shared services like networking and creating scene-specific containers.
+  │   │   ├── NewsReaderSceneContainer.swift                   # Encapsulates dependencies for the NewsReader feature, including use cases, view models, views, and flow coordinators.
   ├── Presentation/                                            # Core presentation layer of the application, handling UI logic and user interaction.
   │   ├── Utils                                                # Shared utility functions and constants for the UI layer.
   │   │   ├── AccessibilityIdentifier.swift                    # Contains identifiers for UI elements to support testing and accessibility.
+  │   ├── Flows                                                # Flows
+  │   │   ├── NewsSceneFlowCoordinator.swift                   # Coordinates the navigation flow for the News feature, managing transitions between views.
   │   ├── ViewModels                                           # Handles business logic and prepares data for the views.
   │   │   ├── NewsViewModel.swift                              # Fetches and prepares news data for display.
-  │   │   ├── ViewModelFactory.swift                           # Factory class to create instances of view models.
   │   ├── Views                                                # Defines the app's user interface.
   │   │   ├── NewsListView.swift                               # Displays a list of news articles.
   │   │   ├── MainView.swift                                   # Main entry point for the app's UI.
