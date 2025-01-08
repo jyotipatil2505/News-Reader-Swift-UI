@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The ArticleModel struct represents the details of a news article, which includes the title, description, URL, image URL, bookmark status, and publication date.
 struct ArticleModel: Codable, Identifiable {
     let title: String
     let description: String?

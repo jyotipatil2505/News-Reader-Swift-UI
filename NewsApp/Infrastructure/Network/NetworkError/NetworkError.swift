@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// NetworkError is an enumeration that defines various error types related to network operations in the app. It conforms to both Error and LocalizedError protocols, providing meaningful error messages for each case.
 enum NetworkError: Error, LocalizedError {
     case invalidURL
     case badRequest

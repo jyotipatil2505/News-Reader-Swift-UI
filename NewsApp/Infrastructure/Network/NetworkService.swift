@@ -7,16 +7,23 @@
 
 import Foundation
 
+/// The NetworkServiceProtocol defines the contract that the NetworkService class must adhere to for handling network requests.
+/// The protocol focuses on abstracting the request process and ensuring that any conforming class can handle requests in a consistent manner.
 protocol NetworkServiceProtocol: AnyObject {
+    
+    /// The request method is responsible for making a network request, decoding the response into the specified type T, and handling errors.
     func request<T: Decodable>(request: any NetworkRequestType, type: T.Type, decodingType: JSONDecoder.KeyDecodingStrategy) async throws -> T
 }
 
 final class NetworkService: NetworkServiceProtocol {
-        
+    
+    /// An instance of JSONDecoder used to decode the response data into the expected model type.
     private var decoder: JSONDecoder = JSONDecoder()
+    
+    /// A NetworkConfigurable object that holds the configuration for network requests, including the base URL and headers.
     private let config: NetworkConfigurable
         
-    // Custom session with timeout configuration
+    /// A custom URLSession with a timeout configuration for network requests. It has a timeout of 60 seconds for both requests and resources.
     private var session: URLSession = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 60 // Request timeout (seconds)
@@ -28,6 +35,7 @@ final class NetworkService: NetworkServiceProtocol {
         self.config = config
     }
     
+    /// Makes an asynchronous network request, decodes the response, and returns the result.
     func request<T: Decodable>(request: any NetworkRequestType, type: T.Type, decodingType: JSONDecoder.KeyDecodingStrategy) async throws -> T {
         // Check for Internet Connectivity
         guard Reachability.isConnectedToNetwork() else {
@@ -67,6 +75,7 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
     
+    /// Maps the HTTP status code to a corresponding NetworkError.
     private func httpError(statusCode: Int) -> NetworkError {
         switch statusCode {
         case 400: return .badRequest
@@ -80,6 +89,7 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
     
+    /// Handles various types of errors that can occur during the network request and converts them into a NetworkError.
     private func handleError(error: Error) -> NetworkError {
         switch error {
         case is Swift.DecodingError:

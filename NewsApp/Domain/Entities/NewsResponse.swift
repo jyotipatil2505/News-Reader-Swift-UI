@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The NewsResponse struct represents the structure of the response returned from the news API.
 struct NewsResponse: Codable {
     let status: String?
     let totalResults: Int?

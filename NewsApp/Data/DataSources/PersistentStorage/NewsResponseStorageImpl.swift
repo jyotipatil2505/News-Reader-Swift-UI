@@ -1,15 +1,14 @@
 import Foundation
 import RealmSwift
 
-import Foundation
-import RealmSwift
-
+/// The NewsResponseStorageImpl class is a Realm-based implementation of the NewsResponseStorage protocol, providing functionality to interact with a local storage system (Realm) to fetch, save, and delete news articles.
 class NewsResponseStorageImpl: NewsResponseStorage {
     
     let queueName: String = "com.newsapp.database.queue"
     lazy var queue = DispatchQueue(label: queueName)
     
-    // Helper function to execute Realm operations
+    /// A generic helper method used to perform Realm operations asynchronously.
+    /// It accepts an operation to be executed within the Realm context and returns a result through the completion handler.
     private func performRealmOperation<T>(
         operation: @escaping (Realm) throws -> T,
         completion: @escaping (Result<T, Error>) -> Void
@@ -25,7 +24,7 @@ class NewsResponseStorageImpl: NewsResponseStorage {
         }
     }
     
-    // Fetch News from local storage (Realm)
+    /// The fetchNews() method retrieves articles from the Realm database, mapping ArticleRealm objects to domain models (ArticleModel).
     func fetchNews() async throws -> [ArticleModel] {
         return try await withCheckedThrowingContinuation { continuation in
             performRealmOperation(
@@ -45,7 +44,7 @@ class NewsResponseStorageImpl: NewsResponseStorage {
         }
     }
     
-    // Save News to local storage (Realm)
+    /// The saveNews(_:) method stores a news article (ArticleModel) in the Realm database. It uses realm.add(realmNews, update: .modified) to add or update the article.
     func saveNews(_ news: ArticleModel) async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
             performRealmOperation(
@@ -71,8 +70,9 @@ class NewsResponseStorageImpl: NewsResponseStorage {
         }
     }
     
-    // Save News to local storage (Realm)
+    /// The deleteNews(_:) method deletes a specific news article from Realm based on its primary key. It checks if the article already exists in the Realm database before deletion.
     func deleteNews(_ news: ArticleModel) async throws -> Bool {
+        /// The methods use withCheckedThrowingContinuation to handle asynchronous operations and throw any errors if they occur during the Realm operations.
         return try await withCheckedThrowingContinuation { continuation in
             performRealmOperation(
                 operation: { realm in

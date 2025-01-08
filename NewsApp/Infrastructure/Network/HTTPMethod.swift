@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The HTTPMethod enum represents the various HTTP request methods used in networking operations.
 enum HTTPMethod: String {
     case GET
     case POST

@@ -7,8 +7,10 @@
 
 import Foundation
 
-// Map Realm Object to Domain Model
+/// Extension to the ArticleRealm class
 extension ArticleRealm {
+    
+    /// This method converts the Realm object (ArticleRealm) back to a domain model (ArticleModel)
     func toDomain() -> ArticleModel {
         return ArticleModel(
             title: self.title,

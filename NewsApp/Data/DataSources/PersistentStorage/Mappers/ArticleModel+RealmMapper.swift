@@ -7,7 +7,10 @@
 
 import Foundation
 
+/// Extension to the ArticleModel class
 extension ArticleModel {
+    
+    /// This method essentially prepares the data in the ArticleModel to be stored in the Realm database by converting it into a format (ArticleRealm) that Realm can handle.
     func toRealm() -> ArticleRealm {
         let realmModel = ArticleRealm()
         realmModel.id = self.id
