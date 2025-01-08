@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct NewsAppApp: App {
+struct NewsReaderApp: App {
     let mainFlowCoordinator = FlowCoordinator(appContainer: AppContainer())
 
     var body: some Scene {
