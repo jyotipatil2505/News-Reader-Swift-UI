@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-final class NewsSceneContainer: NewsFlowCoordinatorDependencies {
+final class NewsReaderSceneContainer: NewsFlowCoordinatorDependencies {
     
     typealias NewsListViewType = NewsListView
     typealias BookmarkViewType = BookmarkView
@@ -53,7 +53,7 @@ final class NewsSceneContainer: NewsFlowCoordinatorDependencies {
     }
 
     // MARK: - Flow Coordinators
-    func makeNewsFlowCoordinator() -> NewsSceneFlowCoordinator<NewsSceneContainer> {
+    func makeNewsFlowCoordinator() -> NewsSceneFlowCoordinator<NewsReaderSceneContainer> {
         NewsSceneFlowCoordinator(dependencies: self)
     }
 }

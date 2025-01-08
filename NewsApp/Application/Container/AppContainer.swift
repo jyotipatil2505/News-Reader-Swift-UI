@@ -21,10 +21,8 @@ final class AppContainer {
     }()
     
     // MARK: - Containers of scenes
-    func makeNewsSceneContainer() -> NewsSceneContainer {
-        let dependencies = NewsSceneContainer.Dependencies(
-            networkService: networkServiceManager
-        )
-        return NewsSceneContainer(dependencies: dependencies)
+    func makeNewsSceneContainer() -> NewsReaderSceneContainer {
+        let dependencies = NewsReaderSceneContainer.Dependencies(networkService: networkServiceManager)
+        return NewsReaderSceneContainer(dependencies: dependencies)
     }
 }

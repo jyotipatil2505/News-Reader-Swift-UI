@@ -4,48 +4,6 @@
 ////
 ////  Created by Jyoti Patil on 07/01/25.
 ////
-//
-//import Foundation
-//
-//enum Endpoint {
-//    case topHeadlines
-//    case everything
-//}
-//
-//extension Endpoint: NetworkRequestType {
-//
-//    var path: String {
-//        switch self {
-//        case .topHeadlines:
-//            return "/v2/top-headlines"
-//        case .everything:
-//            return "v2/everything"
-//        }
-//    }
-//    
-//    var httpMethod: HTTPMethod {
-//        switch self {
-//        case .topHeadlines:
-//            return .GET
-//        case .everything:
-//            return .GET
-//        }
-//    }
-//    
-//    public var parameters: RequestParams? {
-//        switch self {
-//        case .topHeadlines:
-//            return nil
-//        case .everything:
-//            return nil
-//        }
-//    }
-//    
-//    // Headers for each case
-//    var headers: HTTPHeaders {
-//        return ["Content-Type":"application/json"]
-//    }
-//}
 
 import Foundation
 
@@ -81,8 +39,4 @@ struct JSONBodyEncoder: BodyEncoder {
     func encode(_ parameters: [String: Any]) -> Data? {
         return try? JSONSerialization.data(withJSONObject: parameters)
     }
-}
-
-protocol ResponseDecoder {
-    func decode<T: Decodable>(_ data: Data) throws -> T
 }
