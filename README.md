@@ -118,14 +118,15 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   │   ├── Reachability.swift                               # Checks network connectivity.
   ├── Infrastructure/                                       
   │   ├── Network                                              # Handles networking.
-  │   │   ├── Protocols                                        # Defines networking-related contracts.
-  │   │   │   ├── APIServiceProtocol.swift                     # Protocol for API service operations.
-  │   │   │   APIConfig.swift                                  # Configuration for API base URLs and keys.
-  │   │   │   APIServiceManager.swift                          # Manages API requests and responses.
-  │   │   │   Endpoints.swift                                  # Defines API endpoints.
-  │   │   │   HTTPMethod.swift                                 # Enum for HTTP methods like GET, POST.
-  │   │   │   NetworkError.swift                               # Defines network-related errors.
-  │   │   │   NetworkManager.swift                             # Implements networking operations.
+  │   │   ├── NetworkError                                     # Network Errors
+  │   │   │   ├── NetworkError.swift                           # Handles errors related to networking operations.
+  │   │   ├── Utilities                                        # Utilities
+  │   │   │   ├── Helper.swift                                 # Contains shared utility functions for networking tasks.
+  │   │   ├── NetworkConfig.swift                              # Configures network requests, including base URLs, query parameters, and headers for API communication.
+  │   │   ├── Endpoints.swift                                  # Defines API endpoints.
+  │   │   ├── HTTPMethod.swift                                 # Enum for HTTP methods like GET, POST.
+  │   │   ├── NetworkRequestType.swift                         # Describes the structure and requirements for a network request, including headers, parameters, and body data.
+  │   │   ├── NetworkService.swift                             # Implements the actual networking operations, such as sending requests, handling responses.
   |── Resources/
   │   ├── Preview Content                                      # Preview assets for SwiftUI previews.     
   │   │   ├── Preview Assets.xcassets                          # Preview images and resources.
