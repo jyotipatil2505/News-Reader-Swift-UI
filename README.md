@@ -95,25 +95,24 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   │   ├── ArticleModel.swift                               # Represents an individual news article.
   ├── Data/                                                 
   │   ├── DataSources                                          # Manages data operations.
-  │   │   ├── Local                                            # Handles local storage.
+  │   │   ├── PersistentStorage                                # Handles local storage.
   │   │   │   ├── Mappers                                      # Converts data between local and domain models.
   │   │   │   │   ├── ArticleModel+RealmMapper.swift           # Maps ArticleModel to Realm objects.
   │   │   │   │   ├── ArticleRealm+DomainMapper.swift          # Maps Realm objects back to domain models.
   │   │   │   ├── Models                                       # Contains Realm models.
   │   │   │   │   │── ArticleRealm.swift                       # Realm model for storing article data.
-  │   │   │   ├── NewsLocalDataSource.swift                    # Protocol for local storage operations.
-  │   │   │   ├── NewsLocalDataSourceImpl.swift                # Implements local data operations.
-  │   │   │   ├── LocalStorageError.swift                      # Defines errors for local data storage.
+  │   │   │   ├── NewsResponseStorage.swift                    # Protocol for local storage operations.
+  │   │   │   ├── NewsResponseStorageImpl.swift                # Implements local storage operations.
+  │   │   │   ├── PersistentStorageError.swift                 # Defines errors related to local storage operations.
   │   │   ├── Network                                          # Manages API interactions.
-  │   │   │   ├── NewsNetworkDataSource.swift                  # Protocol for network data fetching.
-  │   │   │   ├── NewsNetworkDataSourceImpl.swift              # Implements network data fetching.
+  │   │   │   ├── APIEndpoints.swift                           # Defines structured API endpoint configurations for fetching network data.
   │   ├── Repositories                                         # Implements repository interfaces.
   │   │   ├── NewsRepository.swift                             # Concrete implementation for managing news data.
   ├── Core/                                                    
   │   ├── Utils                                                # Shared utility classes and extensions.
   │   │   ├── Constants.swift                                  # Application-wide constants.
   │   │   ├── Extensions.swift                                 # Commonly used extensions.
-  │   │   ├── Helpers.swift                                    # Utility functions for various tasks.
+  │   │   ├── Utilities.swift                                  # Utility functions for various tasks.
   │   │   ├── Localization.swift                               # Manages localized strings.
   │   │   ├── Reachability.swift                               # Checks network connectivity.
   ├── Infrastructure/                                       
