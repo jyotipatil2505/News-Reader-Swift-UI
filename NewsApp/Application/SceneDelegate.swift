@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  CryptoCoin
+//  NewsReader
 //
-//  Created by Jyoti Patil on 04/12/24.
+//  Created by Jyoti Patil on 07/01/254.
 //
 
 import UIKit

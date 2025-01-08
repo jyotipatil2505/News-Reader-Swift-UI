@@ -2,22 +2,24 @@
 //  BookmarkedArticlesView.swift
 //  NewsApp
 //
-//  Created by Jyoti Patil on 21/10/24.
+//  Created by Jyoti Patil on 07/01/25.
 //
 
 import SwiftUI
 
-struct BookmarkView: View {
-    @ObservedObject var viewModel: NewsViewModel
-    
-    init(viewModelFactory: ViewModelFactoryProtocol = ViewModelFactory()) {
-        viewModel = viewModelFactory.createCryptoListViewModel()
+final class BookmarkViewModelWrapper: ObservableObject {
+    var viewModel: NewsViewModelProtocol
+    init(viewModel: NewsViewModelProtocol) {
+        self.viewModel = viewModel
     }
-    
+}
+
+struct BookmarkView: View {
+    @StateObject var viewModelWrapper: BookmarkViewModelWrapper
     var body: some View {
         NavigationView {
             VStack {
-                if viewModel.isEmptyBookmarkedArticlesArray {
+                if viewModelWrapper.viewModel.isEmptyBookmarkedArticlesArray {
                     // Show default text if there are no bookmarked articles
                     Text("You haven’t bookmarked any articles yet. Browse and bookmark your favorites!")
                         .font(.headline)
@@ -27,7 +29,7 @@ struct BookmarkView: View {
                         .accessibilityIdentifier(AccessibilityIdentifier.noBookmarksFound)
                 } else {
                     // Show the list of bookmarked articles
-                    List(viewModel.bookmarkedArticles) { article in
+                    List(viewModelWrapper.viewModel.bookmarkedArticles) { article in
                         NavigationLink(destination: NewsDetailView(article: article)) {
                             
                             VStack(alignment: .leading) {
@@ -45,11 +47,11 @@ struct BookmarkView: View {
                     }
                 }
             }
-            .accessibilityIdentifier(AccessibilityIdentifier.bookmarkListView)
             .onAppear {
-                viewModel.loadBookmarks() // Load bookmarks when view appears
+                viewModelWrapper.viewModel.loadBookmarks() // Load bookmarks when view appears
             }
             .navigationTitle("Bookmarks")
+            .accessibilityIdentifier(AccessibilityIdentifier.bookmarkListView)
         }
     }
 }

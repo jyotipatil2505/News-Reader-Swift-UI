@@ -1,22 +1,36 @@
 //
-//  GetCryptoNewsUseCase.swift
-//  CryptoCoin
+//  FetchNewsUseCase.swift
+//  NewsReader
 //
-//  Created by Jyoti Patil on 05/12/24.
+//  Created by Jyoti Patil on 07/01/25.
 //
 
 import Foundation
 
-class FetchNewsUseCase {
+protocol FetchNewsUseCaseProtocol {
+    func fetchTopHeadlinesFromNetwork(category: NewsCategory?) async throws -> [ArticleModel]
+    func fetchEverythingFromNetwork(seartText: String) async throws -> [ArticleModel]
+    func saveNewsIntoLocal(articles: ArticleModel) async throws -> Bool
+    func deleteNewsFromLocal(articles: ArticleModel) async throws -> Bool
+    func fetchNewsFromLocal() async throws -> [ArticleModel]
+}
+
+class FetchNewsUseCase: FetchNewsUseCaseProtocol {
+    
     private let repository: NewsRepositoryProtocol
 
     init(repository: NewsRepositoryProtocol) {
         self.repository = repository
     }
     
-    func fetchNewsFromNetwork(category: NewsCategory?) async throws -> [ArticleModel] {
-        let localNews = try await repository.fetchNewsFromNetwork(category: category)
-        return localNews
+    func fetchTopHeadlinesFromNetwork(category: NewsCategory?) async throws -> [ArticleModel] {
+        let remoteNews = try await repository.fetchTopHeadlinesFromNetwork(category: category)
+        return remoteNews
+    }
+    
+    func fetchEverythingFromNetwork(seartText: String) async throws -> [ArticleModel] {
+        let remoteNews = try await repository.fetchEverythingFromNetwork(seartText: seartText)
+        return remoteNews
     }
     
     func saveNewsIntoLocal(articles: ArticleModel) async throws -> Bool {

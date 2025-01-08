@@ -7,13 +7,42 @@
 
 import Foundation
 
-class NewsViewModel: ObservableObject {
-    @Published var articles: [ArticleModel] = []
-    @Published var bookmarkedArticles: [ArticleModel] = []
-    @Published var showErrorAlert: Bool = false
-    @Published var showErrorMessage: String = ""
-    @Published var selectedCategory: NewsCategory = .all
-    @Published var loadingNewsInProgress: Bool = false
+protocol NewsViewModelProtocolInput {
+    func fetchNews()
+    func updateBookmarkedFlag(articlesArray: [ArticleModel]) -> [ArticleModel]
+    func toggleBookmark(article: ArticleModel)
+    func saveBookmark(article: ArticleModel)
+    func removeBookmark(article: ArticleModel)
+    func loadBookmarks()
+}
+
+protocol NewsViewModelProtocolOutput {
+    var articles: [ArticleModel] { get }
+    var bookmarkedArticles: [ArticleModel] { get }
+    var showErrorAlert: Bool { get set }
+    var showErrorMessage: String { get }
+    var selectedCategory: NewsCategory { get set }
+    var loadingNewsInProgress: Bool { get }
+    var isEmptyArticlesArray: Bool { get }
+    var isEmptyBookmarkedArticlesArray: Bool { get }
+    var isLoading: Bool { get }
+    
+    func handleError(error: Error)
+}
+
+typealias NewsViewModelProtocol = NewsViewModelProtocolInput & NewsViewModelProtocolOutput
+
+/// The NewsViewModel class is responsible for managing the data flow of news articles within the application.
+/// It fetches news from an external source, manages bookmarked articles, and updates the UI state based on the results of these actions.
+/// Additionally, it handles error messages and loading states, ensuring the user experience is smooth and responsive.
+@Observable
+class NewsViewModel: NewsViewModelProtocol {
+    var articles: [ArticleModel] = []
+    var bookmarkedArticles: [ArticleModel] = []
+    var showErrorAlert: Bool = false
+    var showErrorMessage: String = ""
+    var selectedCategory: NewsCategory = .all
+    var loadingNewsInProgress: Bool = false
 
     // This is a computed property, but it's not @Published because it's derived from `articles`.
     var isEmptyArticlesArray: Bool {
@@ -27,20 +56,22 @@ class NewsViewModel: ObservableObject {
         loadingNewsInProgress
     }
     
-    private let newsUseCase: FetchNewsUseCase
+    private let newsUseCase: FetchNewsUseCaseProtocol
     
-    init(newsUseCase: FetchNewsUseCase) {
+    /// Initializes the NewsViewModel with the newsUseCase that handles the actual fetching of news data.
+    init(newsUseCase: FetchNewsUseCaseProtocol) {
         self.newsUseCase = newsUseCase
         loadBookmarks()
         fetchNews()
     }
-    
+    /// Fetches news articles either from the network, depending on connectivity. Filters out invalid articles and updates the articles array.
     func fetchNews() {
         loadingNewsInProgress = true
         Task {
             do {
                 // Decide whether to fetch from network or local storage based on connectivity
-                let articles = try await newsUseCase.fetchNewsFromNetwork(category: selectedCategory)
+                let category = selectedCategory == .all ? nil : selectedCategory
+                let articles = try await newsUseCase.fetchTopHeadlinesFromNetwork(category: category)
                                 
                 let validArticles = articles.filter { article in
                     // Exclude articles with title or description marked as "[Removed]"
@@ -50,6 +81,7 @@ class NewsViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     // Update the isBookmarked flag based on bookmarkedArticles
                     self.articles = self.updateBookmarkedFlag(articlesArray: validArticles)
+                    Utilities.debugPrint(log: "self.articles :::: \(self.articles)")
                 }
             } catch {
                 handleError(error: error)
@@ -61,9 +93,8 @@ class NewsViewModel: ObservableObject {
             }
         }
     }
-    
-    // Function to update isBookmarked flags based on bookmarkedArticles
-    private func updateBookmarkedFlag(articlesArray: [ArticleModel]) -> [ArticleModel] {
+    /// Iterates over the given articles and checks if each article is bookmarked, updating the isBookmarked flag accordingly.
+    func updateBookmarkedFlag(articlesArray: [ArticleModel]) -> [ArticleModel] {
         var updatedArticles = articlesArray
         for index in updatedArticles.indices {
             updatedArticles[index].isBookmarked = bookmarkedArticles.contains {
@@ -72,8 +103,7 @@ class NewsViewModel: ObservableObject {
         }
         return updatedArticles
     }
-    
-    // Bookmarking functionality
+    /// Toggles the bookmark status of an article and updates the bookmarkedArticles array by adding or removing the article based on the new status.
     func toggleBookmark(article: ArticleModel) {
         // Find the index of the article in the articles array
         guard let index = articles.firstIndex(where: { $0.id == article.id }) else { return }
@@ -91,8 +121,7 @@ class NewsViewModel: ObservableObject {
         }
         
     }
-    
-    // Save bookmarks to UserDefaults
+    /// Saves a bookmarked article to local storage and updates the bookmarkedArticles array if the save is successful.
     func saveBookmark(article: ArticleModel) {
         Task {
             do {
@@ -107,7 +136,7 @@ class NewsViewModel: ObservableObject {
             }
         }
     }
-    
+    /// Removes a bookmarked article from local storage and updates the bookmarkedArticles array accordingly.
     func removeBookmark(article: ArticleModel) {
         Task {
             do {
@@ -124,7 +153,7 @@ class NewsViewModel: ObservableObject {
         }
     }
     
-    // Load bookmarks from UserDefaults
+    /// Loads the bookmarked articles from local storage into the bookmarkedArticles array.
     func loadBookmarks() {
         Task {
             do {
@@ -137,8 +166,8 @@ class NewsViewModel: ObservableObject {
             }
         }
     }
-    
-    private func handleError(error: Error) {
+    /// Handles errors by setting the showErrorAlert flag to true and updating the showErrorMessage with the error description.
+    func handleError(error: Error) {
         DispatchQueue.main.async {
             self.showErrorAlert = true
             self.showErrorMessage = error.localizedDescription

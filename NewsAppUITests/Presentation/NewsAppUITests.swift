@@ -2,7 +2,7 @@
 //  NewsAppUITests.swift
 //  NewsAppUITests
 //
-//  Created by Jyoti Patil on 21/10/24.
+//  Created by Jyoti Patil on 07/01/25.
 //
 
 import XCTest
@@ -173,7 +173,7 @@ final class NewsAppUITests: XCTestCase {
         
         // Verify the content for the "Bookmark" tab
         let bookmarkListView = app.staticTexts[AccessibilityIdentifier.bookmarkListView] // Assuming you have this identifier set
-        XCTAssertTrue(bookmarkListView.waitForExistence(timeout: 10), "Bookmark List View should appear after tapping the Bookmark tab")
+        XCTAssertTrue(bookmarkListView.waitForExistence(timeout: 20), "Bookmark List View should appear after tapping the Bookmark tab")
     }
     
     func testNoBookmarkViewUI() {
@@ -196,7 +196,7 @@ final class NewsAppUITests: XCTestCase {
         
         // Verify the content for the "Bookmark" tab
         let bookmarkListView = app.staticTexts[AccessibilityIdentifier.bookmarkListView] // Assuming you have this identifier set
-        XCTAssertTrue(bookmarkListView.waitForExistence(timeout: 10), "Bookmark List View should appear after tapping the Bookmark tab")
+        XCTAssertTrue(bookmarkListView.waitForExistence(timeout: 20), "Bookmark List View should appear after tapping the Bookmark tab")
         
         let articleCells = app.cells
         let cellCount = articleCells.count

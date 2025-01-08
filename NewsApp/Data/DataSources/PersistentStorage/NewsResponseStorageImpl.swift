@@ -4,9 +4,9 @@ import RealmSwift
 import Foundation
 import RealmSwift
 
-class NewsLocalDataSourceImpl: NewsLocalDataSource {
+class NewsResponseStorageImpl: NewsResponseStorage {
     
-    let queueName: String = "com.cryptocoin.database.queue"
+    let queueName: String = "com.newsapp.database.queue"
     lazy var queue = DispatchQueue(label: queueName)
     
     // Helper function to execute Realm operations
@@ -35,8 +35,8 @@ class NewsLocalDataSourceImpl: NewsLocalDataSource {
                 },
                 completion: { result in
                     switch result {
-                    case .success(let cryptoNews):
-                        continuation.resume(returning: Array(cryptoNews))
+                    case .success(let news):
+                        continuation.resume(returning: Array(news))
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
@@ -60,10 +60,10 @@ class NewsLocalDataSourceImpl: NewsLocalDataSource {
                 completion: { result in
                     switch result {
                     case .success:
-                        print("Save News success ::::")
+                        Utilities.debugPrint(log: "Save News success ::::")
                         continuation.resume(returning: true)
                     case .failure(let error):
-                        print("Save News failure :::: ",error)
+                        Utilities.debugPrint(log: "Save News failure :::: \(error)")
                         continuation.resume(throwing: error)
                     }
                 }
@@ -80,7 +80,7 @@ class NewsLocalDataSourceImpl: NewsLocalDataSource {
                     try? realm.write {
                         // If the object already exists in Realm, we should fetch it before deletion
                         if let existingNews = realm.object(ofType: ArticleRealm.self, forPrimaryKey: realmNews.id) {
-                            print("Object to be deleted :::::: ",existingNews)
+                            Utilities.debugPrint(log: "Object to be deleted :::::: \(existingNews)")
                             realm.delete(existingNews)  // Delete the object from the Realm
                         }
                     }
@@ -88,10 +88,10 @@ class NewsLocalDataSourceImpl: NewsLocalDataSource {
                 completion: { result in
                     switch result {
                     case .success:
-                        print("Delete News success ::::")
+                        Utilities.debugPrint(log: "Delete News success ::::")
                         continuation.resume(returning: true)
                     case .failure(let error):
-                        print("Delete News failure :::: ",error)
+                        Utilities.debugPrint(log: "Delete News failure :::: \(error)")
                         continuation.resume(throwing: error)
                     }
                 }

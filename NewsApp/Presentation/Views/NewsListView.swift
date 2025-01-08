@@ -2,31 +2,37 @@
 //  NewsListView.swift
 //  NewsApp
 //
-//  Created by Jyoti Patil on 21/10/24.
+//  Created by Jyoti Patil on 07/01/25.
 //
 
 import SwiftUI
 
-struct NewsListView: View {
-    @ObservedObject var viewModel: NewsViewModel
-    
-    init(viewModelFactory: ViewModelFactoryProtocol = ViewModelFactory()) {
-        viewModel = viewModelFactory.createCryptoListViewModel()
+/// This class serves as a wrapper for the NewsViewModelProtocol. It helps in managing and exposing the data related to news articles to the view.
+final class NewsListViewModelWrapper: ObservableObject {
+    /// This is an instance of NewsViewModelProtocol, which handles the logic for fetching and managing news data.
+    var viewModel: NewsViewModelProtocol
+    init(viewModel: NewsViewModelProtocol) {
+        self.viewModel = viewModel
     }
+}
+
+/// The main view that displays a list of news articles. It also includes functionality for filtering articles by category, handling loading and error states, and allowing users to navigate to detailed news views.
+struct NewsListView: View {
+    @StateObject var viewModelWrapper: NewsListViewModelWrapper
     
     var body: some View {
         NavigationView {
             VStack {
                 
-                CategoryFilterView(viewModel: viewModel)
+                CategoryFilterView(viewModelWrapper: viewModelWrapper)
 
                 ZStack {
-                    if viewModel.isLoading {
+                    if viewModelWrapper.viewModel.isLoading {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                             .scaleEffect(2)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else if viewModel.isEmptyArticlesArray {
+                    } else if viewModelWrapper.viewModel.isEmptyArticlesArray {
                         Text("No News Found")
                             .font(.headline)
                             .foregroundColor(.gray)
@@ -35,31 +41,9 @@ struct NewsListView: View {
                             .padding()
                             .accessibilityIdentifier(AccessibilityIdentifier.noNewsFoundLabel)
                     } else {
-                        List(viewModel.articles) { article in
+                        List(viewModelWrapper.viewModel.articles) { article in
                             NavigationLink(destination: NewsDetailView(article: article)) {
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(article.title)
-                                            .font(.headline)
-                                        if let description = article.description {
-                                            Text(description)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
-                                                .lineLimit(2)
-                                        }
-                                    }
-                                    Spacer()
-                                    Button(action: {
-                                        viewModel.toggleBookmark(article: article)
-                                    }) {
-                                        Image(systemName: article.isBookmarked ? "bookmark.fill" : "bookmark")
-                                            .foregroundColor(article.isBookmarked ? .yellow : .gray)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .accessibilityIdentifier(AccessibilityIdentifier.bookmarkButton)
-                                    .accessibilityLabel(article.isBookmarked ? "bookmark.fill" : "bookmark")
-                                }
-                                .padding(.vertical, 5)
+                                NewsRowView(article: article, viewModelWrapper: viewModelWrapper)
                             }
                         }
                     }
@@ -68,33 +52,46 @@ struct NewsListView: View {
             .accessibilityIdentifier(AccessibilityIdentifier.newsListView)
             .navigationTitle("Top Headlines")
             .onAppear {
-                viewModel.fetchNews()
+                viewModelWrapper.viewModel.fetchNews()
             }
-            .onChange(of: viewModel.selectedCategory) { _ in
-                viewModel.fetchNews() // Refetch news when the category changes
+            .onChange(of: viewModelWrapper.viewModel.selectedCategory) { oldValue, newValue in
+                viewModelWrapper.viewModel.fetchNews() // Refetch news when the category changes
             }
-            .alert(isPresented: $viewModel.showErrorAlert) {
-                Alert(title: Text("Error"), message: Text(viewModel.showErrorMessage), dismissButton: .default(Text("OK")))
+            .alert(isPresented: self.$viewModelWrapper.viewModel.showErrorAlert) {
+                Alert(title: Text("Error"), message: Text(viewModelWrapper.viewModel.showErrorMessage), dismissButton: .default(Text("OK")))
             }
         }
     }
 }
 
 struct NewsRowView: View {
-    let article: Article
+    let article: ArticleModel
+    var viewModelWrapper: NewsListViewModelWrapper
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(article.title)
-                .font(.headline)
-            if let description = article.description {
-                Text(description)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .lineLimit(2)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(article.title)
+                    .font(.headline)
+                if let description = article.description {
+                    Text(description)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .lineLimit(2)
+                }
             }
+            Spacer()
+            Button(action: {
+                viewModelWrapper.viewModel.toggleBookmark(article: article)
+            }) {
+                Image(systemName: article.isBookmarked ? "bookmark.fill" : "bookmark")
+                    .foregroundColor(article.isBookmarked ? .yellow : .gray)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .accessibilityIdentifier(AccessibilityIdentifier.bookmarkButton)
+            .accessibilityLabel(article.isBookmarked ? "bookmark.fill" : "bookmark")
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 5)
     }
 }
 

@@ -1,78 +1,88 @@
+////
+////  Endpoints.swift
+////  NewsApp
+////
+////  Created by Jyoti Patil on 07/01/25.
+////
 //
-//  Endpoints.swift
-//  NewsApp
+//import Foundation
 //
-//  Created by Jyoti Patil on 21/10/24.
+//enum Endpoint {
+//    case topHeadlines
+//    case everything
+//}
 //
+//extension Endpoint: NetworkRequestType {
+//
+//    var path: String {
+//        switch self {
+//        case .topHeadlines:
+//            return "/v2/top-headlines"
+//        case .everything:
+//            return "v2/everything"
+//        }
+//    }
+//    
+//    var httpMethod: HTTPMethod {
+//        switch self {
+//        case .topHeadlines:
+//            return .GET
+//        case .everything:
+//            return .GET
+//        }
+//    }
+//    
+//    public var parameters: RequestParams? {
+//        switch self {
+//        case .topHeadlines:
+//            return nil
+//        case .everything:
+//            return nil
+//        }
+//    }
+//    
+//    // Headers for each case
+//    var headers: HTTPHeaders {
+//        return ["Content-Type":"application/json"]
+//    }
+//}
 
 import Foundation
-import Foundation
 
-// Struct to define an Endpoint for various API calls
-struct Endpoint {
+class Endpoint: NetworkRequestType {
+    var path: String
+    var httpMethod: HTTPMethod
+    var queryParameters: Parameters
+    var bodyParameters: Parameters
+    var headers: HTTPHeaders
+    let bodyEncoder: BodyEncoder
     
-    let path: String
-    let method: HTTPMethod
-    let queryItems: [URLQueryItem]?
-    let headers: [String: String]?
-    let body: Data?
-    
-    // Constructing full URL from the base URL, path, and query items
-    var fullUrl: String {
-        var components = URLComponents(string: APIConfig.baseUrl)!
-        components.path = "/V2" + path
-        components.queryItems = queryItems
-        return components.url?.absoluteString ?? ""
-    }
-    
-    // Generic initializer to support any endpoint
-    init(
-        path: String,
-        method: HTTPMethod,
-        queryItems: [URLQueryItem]? = nil,
-        headers: [String: String]? = nil,
-        body: Data? = nil
-    ) {
+    init(path: String,
+         isFullPath: Bool = false,
+         method: HTTPMethod,
+         headerParameters: HTTPHeaders = [:],
+         queryParameters: Parameters = [:],
+         bodyParameters: Parameters = [:]) {
+        
         self.path = path
-        self.method = method
-        self.queryItems = queryItems
-        self.headers = headers
-        self.body = body
+        self.httpMethod = method
+        self.bodyParameters = bodyParameters
+        self.queryParameters = queryParameters
+        self.headers = headerParameters
+        self.bodyEncoder = JSONBodyEncoder()
     }
-    
-    // Method to create GET request endpoint
-    static func createGETEndpoint(
-        path: String,
-        queryItems: [URLQueryItem]? = nil,
-        headers: [String: String]? = nil
-    ) -> Endpoint {
-        return Endpoint(path: path, method: .GET, queryItems: queryItems, headers: headers)
+}
+
+protocol BodyEncoder {
+    func encode(_ parameters: [String: Any]) -> Data?
+}
+
+struct JSONBodyEncoder: BodyEncoder {
+    func encode(_ parameters: [String: Any]) -> Data? {
+        return try? JSONSerialization.data(withJSONObject: parameters)
     }
-    
-    // Method to create POST request endpoint
-    static func createPOSTEndpoint(
-        path: String,
-        body: Data,
-        headers: [String: String]? = nil
-    ) -> Endpoint {
-        return Endpoint(path: path, method: .POST, headers: headers, body: body)
-    }
-    
-    // Method to create PUT request endpoint
-    static func createPUTEndpoint(
-        path: String,
-        body: Data,
-        headers: [String: String]? = nil
-    ) -> Endpoint {
-        return Endpoint(path: path, method: .PUT, headers: headers, body: body)
-    }
-    
-    // Method to create DELETE request endpoint
-    static func createDELETEEndpoint(
-        path: String,
-        queryItems: [URLQueryItem]? = nil,
-        headers: [String: String]? = nil
-    ) -> Endpoint {
-        return Endpoint(path: path, method: .DELETE, queryItems: queryItems, headers: headers)
-    }
+}
+
+protocol ResponseDecoder {
+    func decode<T: Decodable>(_ data: Data) throws -> T
 }

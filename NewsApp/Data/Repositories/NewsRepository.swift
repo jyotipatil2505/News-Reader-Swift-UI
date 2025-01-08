@@ -1,38 +1,58 @@
 //
 //  File.swift
-//  CryptoCoin
+//  NewsReader
 //
-//  Created by Jyoti Patil on 05/12/24.
+//  Created by Jyoti Patil on 07/01/25.
 //
 
 import Foundation
 
 class NewsRepository: NewsRepositoryProtocol {
     
-    private let networkDataSource: NewsNetworkDataSource
-    private let localDataSource: NewsLocalDataSource
+    private let localStorage: NewsResponseStorage
+    private let networkService: NetworkServiceProtocol
 
-    init(networkDataSource: NewsNetworkDataSource, localDataSource: NewsLocalDataSource) {
-        self.networkDataSource = networkDataSource
-        self.localDataSource = localDataSource
+    init(networkService: NetworkServiceProtocol, localStorage: NewsResponseStorage) {
+        self.localStorage = localStorage
+        self.networkService = networkService
     }
     
-    func fetchNewsFromNetwork(category: NewsCategory?) async throws -> [ArticleModel] {
+    func fetchTopHeadlinesFromNetwork(category: NewsCategory? = nil) async throws -> [ArticleModel] {
         // Fallback to network if local data is unavailable
-        let networkNews = try await networkDataSource.fetchNews(category: category)
-        return networkNews
+        do {
+            let request = category == nil ? APIEndpoints.getTopHeadlines() : APIEndpoints.getTopHeadlinesBy(category: category?.rawValue ?? "")
+            let response: NewsResponse = try await networkService.request(request: request, type: NewsResponse.self, decodingType: .useDefaultKeys)
+            return response.articles
+        } catch let error as NetworkError {
+            throw error
+        } catch {
+            throw error
+        }
+        
+    }
+    
+    func fetchEverythingFromNetwork(seartText: String) async throws -> [ArticleModel] {
+        do {
+            let request = APIEndpoints.fetchEverything(searchText: seartText)
+            let response: NewsResponse = try await networkService.request(request: request, type: NewsResponse.self, decodingType: .useDefaultKeys)
+            return response.articles
+        } catch let error as NetworkError {
+            throw error
+        } catch {
+            throw error
+        }
     }
     
     func fetchNewsFromLocal() async throws -> [ArticleModel] {
-        let localNews = try await localDataSource.fetchNews()
+        let localNews = try await localStorage.fetchNews()
         return localNews
     }
     
     func saveNewsIntoLocal(_ news: ArticleModel) async throws -> Bool {
-        return try await localDataSource.saveNews(news)
+        return try await localStorage.saveNews(news)
     }
     
     func deleteNewsFromLocal(_ news: ArticleModel) async throws -> Bool {
-        return try await localDataSource.deleteNews(news)
+        return try await localStorage.deleteNews(news)
     }
 }
