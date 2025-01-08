@@ -64,13 +64,19 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   ├── TopHeadlines.png                                     # Screenshot showcasing the filter functionality for news categories.
   │   └── ArticleDetails.png                                   # Screenshot displaying the detailed view of a news article.
   ├── Application/                                             
-  │   ├── SceneDelegate.swift                                  # Manages the app's UI lifecycle and handles transitions between app states.
+  │   ├── SceneDelegate.swift                                  # Manages the app's UI lifecycle and scene transitions.
+  │   ├── EnvironmentConfiguration.swift                       # Handles environment-specific settings like API URLs and API keys.
+  │   ├── FlowCoordinator.swift                                # Manages the app's primary flow and determines which view to display based on the app's state.
+  │   ├── Container                                            # Container
+  │   │   ├── AppContainer.swift                               # Serves as the central dependency container, providing shared services like networking and creating scene-specific containers.
+  │   │   ├── NewsReaderSceneContainer.swift                   # Encapsulates dependencies for the NewsReader feature, including use cases, view models, views, and flow coordinators.
   ├── Presentation/                                            # Core presentation layer of the application, handling UI logic and user interaction.
   │   ├── Utils                                                # Shared utility functions and constants for the UI layer.
   │   │   ├── AccessibilityIdentifier.swift                    # Contains identifiers for UI elements to support testing and accessibility.
+  │   ├── Flows                                                # Flows
+  │   │   ├── NewsSceneFlowCoordinator.swift                   # Coordinates the navigation flow for the News feature, managing transitions between views.
   │   ├── ViewModels                                           # Handles business logic and prepares data for the views.
   │   │   ├── NewsViewModel.swift                              # Fetches and prepares news data for display.
-  │   │   ├── ViewModelFactory.swift                           # Factory class to create instances of view models.
   │   ├── Views                                                # Defines the app's user interface.
   │   │   ├── NewsListView.swift                               # Displays a list of news articles.
   │   │   ├── MainView.swift                                   # Main entry point for the app's UI.
@@ -89,37 +95,37 @@ This project follows the **MVVM** (Model-View-ViewModel) architecture pattern, w
   │   │   ├── ArticleModel.swift                               # Represents an individual news article.
   ├── Data/                                                 
   │   ├── DataSources                                          # Manages data operations.
-  │   │   ├── Local                                            # Handles local storage.
+  │   │   ├── PersistentStorage                                # Handles local storage.
   │   │   │   ├── Mappers                                      # Converts data between local and domain models.
   │   │   │   │   ├── ArticleModel+RealmMapper.swift           # Maps ArticleModel to Realm objects.
   │   │   │   │   ├── ArticleRealm+DomainMapper.swift          # Maps Realm objects back to domain models.
   │   │   │   ├── Models                                       # Contains Realm models.
   │   │   │   │   │── ArticleRealm.swift                       # Realm model for storing article data.
-  │   │   │   ├── NewsLocalDataSource.swift                    # Protocol for local storage operations.
-  │   │   │   ├── NewsLocalDataSourceImpl.swift                # Implements local data operations.
-  │   │   │   ├── LocalStorageError.swift                      # Defines errors for local data storage.
+  │   │   │   ├── NewsResponseStorage.swift                    # Protocol for local storage operations.
+  │   │   │   ├── NewsResponseStorageImpl.swift                # Implements local storage operations.
+  │   │   │   ├── PersistentStorageError.swift                 # Defines errors related to local storage operations.
   │   │   ├── Network                                          # Manages API interactions.
-  │   │   │   ├── NewsNetworkDataSource.swift                  # Protocol for network data fetching.
-  │   │   │   ├── NewsNetworkDataSourceImpl.swift              # Implements network data fetching.
+  │   │   │   ├── APIEndpoints.swift                           # Defines structured API endpoint configurations for fetching network data.
   │   ├── Repositories                                         # Implements repository interfaces.
   │   │   ├── NewsRepository.swift                             # Concrete implementation for managing news data.
   ├── Core/                                                    
   │   ├── Utils                                                # Shared utility classes and extensions.
   │   │   ├── Constants.swift                                  # Application-wide constants.
   │   │   ├── Extensions.swift                                 # Commonly used extensions.
-  │   │   ├── Helpers.swift                                    # Utility functions for various tasks.
+  │   │   ├── Utilities.swift                                  # Utility functions for various tasks.
   │   │   ├── Localization.swift                               # Manages localized strings.
   │   │   ├── Reachability.swift                               # Checks network connectivity.
   ├── Infrastructure/                                       
   │   ├── Network                                              # Handles networking.
-  │   │   ├── Protocols                                        # Defines networking-related contracts.
-  │   │   │   ├── APIServiceProtocol.swift                     # Protocol for API service operations.
-  │   │   │   APIConfig.swift                                  # Configuration for API base URLs and keys.
-  │   │   │   APIServiceManager.swift                          # Manages API requests and responses.
-  │   │   │   Endpoints.swift                                  # Defines API endpoints.
-  │   │   │   HTTPMethod.swift                                 # Enum for HTTP methods like GET, POST.
-  │   │   │   NetworkError.swift                               # Defines network-related errors.
-  │   │   │   NetworkManager.swift                             # Implements networking operations.
+  │   │   ├── NetworkError                                     # Network Errors
+  │   │   │   ├── NetworkError.swift                           # Handles errors related to networking operations.
+  │   │   ├── Utilities                                        # Utilities
+  │   │   │   ├── Helper.swift                                 # Contains shared utility functions for networking tasks.
+  │   │   ├── NetworkConfig.swift                              # Configures network requests, including base URLs, query parameters, and headers for API communication.
+  │   │   ├── Endpoints.swift                                  # Defines API endpoints.
+  │   │   ├── HTTPMethod.swift                                 # Enum for HTTP methods like GET, POST.
+  │   │   ├── NetworkRequestType.swift                         # Describes the structure and requirements for a network request, including headers, parameters, and body data.
+  │   │   ├── NetworkService.swift                             # Implements the actual networking operations, such as sending requests, handling responses.
   |── Resources/
   │   ├── Preview Content                                      # Preview assets for SwiftUI previews.     
   │   │   ├── Preview Assets.xcassets                          # Preview images and resources.
