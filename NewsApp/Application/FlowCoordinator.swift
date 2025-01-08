@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+
 /// The FlowCoordinator class is responsible for managing the app's flow.
 final class FlowCoordinator {
 
