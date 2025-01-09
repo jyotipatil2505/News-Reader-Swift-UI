@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// This class serves as a wrapper for the NewsViewModelProtocol. It helps in managing and exposing the data related to news articles to the view.
-final class NewsListViewModelWrapper: ObservableObject {
+final class NewsListViewModelWrapper {
     
     /// This is an instance of NewsViewModelProtocol, which handles the logic for fetching and managing news data.
     var viewModel: NewsViewModelProtocol
@@ -19,12 +19,12 @@ final class NewsListViewModelWrapper: ObservableObject {
 
 /// The main view that displays a list of news articles. It also includes functionality for filtering articles by category, handling loading and error states, and allowing users to navigate to detailed news views.
 struct NewsListView: View {
-    @StateObject var viewModelWrapper: NewsListViewModelWrapper
+    @State var viewModelWrapper: NewsListViewModelWrapper
     
     var body: some View {
+        
         NavigationView {
             VStack {
-                
                 CategoryFilterView(viewModelWrapper: viewModelWrapper)
 
                 ZStack {
@@ -67,7 +67,7 @@ struct NewsListView: View {
                 /// Refetch news when the category changes
                 viewModelWrapper.viewModel.fetchNews()
             }
-            .alert(isPresented: self.$viewModelWrapper.viewModel.showErrorAlert) {
+            .alert(isPresented: $viewModelWrapper.viewModel.showErrorAlert) {
                 Alert(title: Text("Error"), message: Text(viewModelWrapper.viewModel.showErrorMessage), dismissButton: .default(Text("OK")))
             }
         }

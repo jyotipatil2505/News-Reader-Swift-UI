@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Observation
 
 protocol NewsViewModelProtocolInput {
     func fetchNews()
@@ -35,6 +36,7 @@ typealias NewsViewModelProtocol = NewsViewModelProtocolInput & NewsViewModelProt
 /// The NewsViewModel class is responsible for managing the data flow of news articles within the application.
 /// It fetches news from an external source, manages bookmarked articles, and updates the UI state based on the results of these actions.
 /// Additionally, it handles error messages and loading states, ensuring the user experience is smooth and responsive.
+/// 
 @Observable
 class NewsViewModel: NewsViewModelProtocol {
     var articles: [ArticleModel] = []
@@ -44,7 +46,7 @@ class NewsViewModel: NewsViewModelProtocol {
     var selectedCategory: NewsCategory = .all
     var loadingNewsInProgress: Bool = false
 
-    // This is a computed property, but it's not @Published because it's derived from `articles`.
+    /// This is a computed property, but it's not @Published because it's derived from `articles`.
     var isEmptyArticlesArray: Bool {
         articles.isEmpty  // Returns true if articles is empty, false otherwise.
     }
@@ -64,6 +66,7 @@ class NewsViewModel: NewsViewModelProtocol {
         loadBookmarks()
         fetchNews()
     }
+    
     /// Fetches news articles either from the network, depending on connectivity. Filters out invalid articles and updates the articles array.
     func fetchNews() {
         loadingNewsInProgress = true
@@ -93,6 +96,7 @@ class NewsViewModel: NewsViewModelProtocol {
             }
         }
     }
+    
     /// Iterates over the given articles and checks if each article is bookmarked, updating the isBookmarked flag accordingly.
     func updateBookmarkedFlag(articlesArray: [ArticleModel]) -> [ArticleModel] {
         var updatedArticles = articlesArray
@@ -103,6 +107,7 @@ class NewsViewModel: NewsViewModelProtocol {
         }
         return updatedArticles
     }
+    
     /// Toggles the bookmark status of an article and updates the bookmarkedArticles array by adding or removing the article based on the new status.
     func toggleBookmark(article: ArticleModel) {
         // Find the index of the article in the articles array
@@ -121,6 +126,7 @@ class NewsViewModel: NewsViewModelProtocol {
         }
         
     }
+    
     /// Saves a bookmarked article to local storage and updates the bookmarkedArticles array if the save is successful.
     func saveBookmark(article: ArticleModel) {
         Task {
@@ -136,6 +142,7 @@ class NewsViewModel: NewsViewModelProtocol {
             }
         }
     }
+    
     /// Removes a bookmarked article from local storage and updates the bookmarkedArticles array accordingly.
     func removeBookmark(article: ArticleModel) {
         Task {
@@ -166,6 +173,7 @@ class NewsViewModel: NewsViewModelProtocol {
             }
         }
     }
+    
     /// Handles errors by setting the showErrorAlert flag to true and updating the showErrorMessage with the error description.
     func handleError(error: Error) {
         DispatchQueue.main.async {

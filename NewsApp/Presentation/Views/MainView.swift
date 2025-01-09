@@ -9,6 +9,7 @@ import SwiftUI
 
 /// MainView is a SwiftUI view that represents the main user interface of the app, containing a TabView to switch between two primary sections: News and Bookmarks.
 struct MainView: View {
+    
     /// A view of type AnyView that represents the news section of the app.
     let newsView: AnyView
     

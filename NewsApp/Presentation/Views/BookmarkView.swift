@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-final class BookmarkViewModelWrapper: ObservableObject {
+/// This class serves as a wrapper for the NewsViewModelProtocol. It helps in managing and exposing the data related to news articles to the view.
+final class BookmarkViewModelWrapper {
+    
+    /// This is an instance of NewsViewModelProtocol, which handles the logic for fetching and managing news data.
     var viewModel: NewsViewModelProtocol
     init(viewModel: NewsViewModelProtocol) {
         self.viewModel = viewModel
@@ -19,7 +22,7 @@ struct BookmarkView: View {
     
     /// This is an observable object wrapper for the NewsViewModelProtocol, which manages the logic for the bookmarked articles.
     /// This allows the view to react to changes in the view model and update the UI accordingly.
-    @StateObject var viewModelWrapper: BookmarkViewModelWrapper
+    @State var viewModelWrapper: BookmarkViewModelWrapper
     
     var body: some View {
         NavigationView {
